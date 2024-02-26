@@ -1,5 +1,4 @@
-import {QuestionBase} from "../../question-base";
-
+import {QuestionBase} from "./questions.base";
 export class FormGroupQuestion extends QuestionBase<any> {
     override controlType = 'FormGroup';
     override type = 'FormGroup'

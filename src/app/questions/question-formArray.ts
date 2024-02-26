@@ -1,4 +1,5 @@
-import {QuestionBase} from "../../question-base";
+import {QuestionBase} from "./questions.base";
+
 
 export class FormGroupArray extends QuestionBase<string> {
     override type = 'FormGroupArray';
