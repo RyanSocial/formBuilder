@@ -1,40 +1,61 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {QuestionBase} from "../../../questions/questions.base";
-import {TextboxQuestion} from "../../../questions/question-textbox";
+import {FormGroupArray} from "../../../questions/question-formArray";
 import {FormGroupQuestion} from "../../../questions/question-formGroup";
-import {of} from "rxjs";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QuestionControlService {
-  generateRssQuestions() {
-    const rss_questions: QuestionBase<any>[] = [
-      new TextboxQuestion({
-        key: 'broker_id',
-        label: 'Broker Id',
-        required: true,
-      }),
-      new TextboxQuestion({
-        key: 'name',
-        label: 'email Name',
-        required: true,
-      }),
-      new FormGroupQuestion({
-        key: 'display_name',
-        label: 'Display Name',
-        value: '', // Initialize with an empty array or initial values
-        nestedFormGroup:
-          [
-            new TextboxQuestion({
-              key: 'default',
-              label: 'Display Name',
-              required: true,
-            })
-          ]
-      }),
+  toFormGroup(questions: QuestionBase<string>[]) {
+    const group: any = {};
+    questions.forEach((question) => {
+      if (question.type === 'FormGroupArray') {
+        // Create a FormArray and push a nested FormGroup with nested controls
+        const nestedFormGroup = new FormGroup({});
+        question.nestedQuestions!.forEach((nestedQuestion) => {
+          if (nestedQuestion instanceof FormGroupArray) {
+            nestedFormGroup.addControl(nestedQuestion.key, this.createNewArray(nestedQuestion.nestedQuestions!))
+          } else if (nestedQuestion instanceof FormGroupQuestion) {
+            nestedFormGroup.addControl(nestedQuestion.key, this.createFormGroup(nestedQuestion.nestedFormGroup!))
+          } else {
+            nestedFormGroup.addControl(
+              nestedQuestion.key,
+              new FormControl(
+                nestedQuestion.value || '',
+                nestedQuestion.required ? Validators.required : null
+              )
+            );
+          }
+        });
+        const formArray = new FormArray([nestedFormGroup]);
+        group[question.key] = formArray; // Assign the FormArray to the key
+      } else if (question.type === 'FormGroup') {
+        group[question.key] = this.createFormGroup(question.nestedFormGroup!)
+      } else {
+        group[question.key] = question.required
+          ? new FormControl(question.value || '', Validators.required)
+          : new FormControl(question.value || '');
+      }
+    });
+    return new FormGroup(group);
+  }
 
-    ]
-    return of(rss_questions)
+  private createFormGroup(controlsArray: QuestionBase<any>[]) {
+    const group = new FormGroup({})
+    controlsArray.forEach(control => {
+      group.addControl(
+        control.key,
+        new FormControl(
+          control.value || '',
+          control.required ? Validators.required : null
+        )
+      )
+    })
+    return group
+  }
+
+  private createNewArray(nestedQuestions: QuestionBase<string>[]) {
+    const arrayValue = this.toFormGroup(nestedQuestions)
+    return new FormArray([arrayValue])
   }
 }
