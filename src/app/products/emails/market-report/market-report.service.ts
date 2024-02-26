@@ -12,26 +12,19 @@ export class MarketReportService {
         key: 'broker_id',
         label: 'Broker Id',
         required: true,
+        hide: true
       }),
       new TextboxQuestion({
         key: 'name',
-        label: 'email Name',
+        label: 'Market Report Name',
         required: true,
-        placeholder: 'Email Name'
+        placeholder: 'Market Report Name'
       }),
-      new FormGroupQuestion({
-        key: 'display_name',
-        label: 'Display Name',
-        value: '', // Initialize with an empty array or initial values
-        nestedFormGroup:
-          [
-            new TextboxQuestion({
-              key: 'default',
-              label: 'Display Name',
-              required: true,
-            })
-          ]
-      }),
+      new TextboxQuestion({
+        key: 'Original Execution',
+        label: 'Original Execution',
+        required: true,
+      })
 
     ]
     return rss_questions

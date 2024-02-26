@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MarketReportService} from "./market-report.service";
 import {QuestionBase} from "../../../questions/questions.base";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, pipe} from "rxjs";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, JsonPipe} from "@angular/common";
+import {checkType} from "../../../../utils";
 
 @Component({
   selector: 'app-market-report',
@@ -12,7 +13,8 @@ import {AsyncPipe} from "@angular/common";
   imports: [
     AsyncPipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JsonPipe
   ],
   providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',
@@ -41,4 +43,7 @@ export class MarketReportComponent implements OnInit {
   onSubmit() {
     this.payLoad = JSON.stringify(this.markReportForm.getRawValue());
   }
+
+
+  protected readonly checkType = checkType;
 }

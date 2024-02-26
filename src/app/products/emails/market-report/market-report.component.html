@@ -1,10 +1,12 @@
 <div>
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
     @for (question of questions$ | async;track question) {
-      <p>{{ question.label }}</p>
+      @if (checkType(question) === 'FormControl' && !question.hide) {
+        {{ question.label }}
+      }
     }
     <div class="form-row">
-      <button type="submit" >Save</button>
+      <button class="bg-green-500 px-2 py-1 rounded-md text-white" type="submit">Save</button>
     </div>
     @if (payLoad) {
       <div class="form-row">
