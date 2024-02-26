@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MarketReportComponent } from './market-report.component';
+import {MarketReportComponent} from './market-report.component';
+import {FormGroup} from "@angular/forms";
 
 describe('MarketReportComponent', () => {
   let component: MarketReportComponent;
@@ -10,8 +11,8 @@ describe('MarketReportComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MarketReportComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(MarketReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -20,4 +21,9 @@ describe('MarketReportComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  describe('marketReportForm', () => {
+    it('Should create a market Report Form', ()=> {
+      expect(component.questions$.getValue()).not.toBeNull()
+    })
+  })
 });
