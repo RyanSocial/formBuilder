@@ -22,8 +22,13 @@ describe('MarketReportComponent', () => {
     expect(component).toBeTruthy();
   });
   describe('marketReportForm', () => {
-    it('Should create a market Report Form', ()=> {
+    it('should create a market Report Form', () => {
       expect(component.questions$.getValue()).not.toBeNull()
+    })
+    it('Should have a form in the html', () => {
+      const htmlForm = fixture.nativeElement.querySelector('form')
+      expect(htmlForm)
+        .toBeTruthy()
     })
   })
 });

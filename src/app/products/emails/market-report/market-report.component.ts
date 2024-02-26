@@ -1,23 +1,44 @@
-import {Component} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MarketReportService} from "./market-report.service";
 import {QuestionBase} from "../../../questions/questions.base";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-market-report',
   standalone: true,
-  imports: [],
-  providers:[MarketReportService,QuestionControlService],
+  imports: [
+    AsyncPipe,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',
   styleUrl: './market-report.component.css'
 })
-export class MarketReportComponent {
-  questions$ =new BehaviorSubject<QuestionBase<string>[]>([])
-  markReportForm!: FormGroup
-  constructor(private marketReportService: MarketReportService, private questionControlService:QuestionControlService) {
-    this.questions$.next(marketReportService.getInfo())
+export class MarketReportComponent implements OnInit {
+  questions$ = new BehaviorSubject<QuestionBase<string>[]>([]);
+  markReportForm!: FormGroup;
+  payLoad: string = ''
+
+  constructor(
+    private marketReportService: MarketReportService,
+    private questionControlService: QuestionControlService
+  ) {
+  }
+
+  ngOnInit() {
+    // Retrieve questions data in ngOnInit
+    const questions = this.marketReportService.getInfo();
+    this.questions$.next(questions);
+
+    // Create the form group after the questions are available
     this.markReportForm = this.questionControlService.toFormGroup(this.questions$.getValue() as QuestionBase<string>[]);
+  }
+
+  onSubmit() {
+    this.payLoad = JSON.stringify(this.markReportForm.getRawValue());
   }
 }

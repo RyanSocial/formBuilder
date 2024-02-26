@@ -1,3 +1,16 @@
 <div>
-
+  <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
+    @for (question of questions$ | async;track question) {
+      <p>{{ question.label }}</p>
+    }
+    <div class="form-row">
+      <button type="submit" >Save</button>
+    </div>
+    @if (payLoad) {
+      <div class="form-row">
+        <strong>Saved the following values</strong><br>{{ payLoad }}
+      </div>
+    }
+  </form>
 </div>
+
