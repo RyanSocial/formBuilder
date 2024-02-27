@@ -17,3 +17,5 @@ describe('Class type checker', () => {
     expect(checkType(testClass)).toEqual('FormArray')
   })
 })
+
+
