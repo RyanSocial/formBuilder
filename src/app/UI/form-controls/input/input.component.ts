@@ -1,6 +1,6 @@
 import {Component, Input, input} from '@angular/core';
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
-import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {QuestionBase} from "../../../questions/questions.base";
 
@@ -17,5 +17,11 @@ import {QuestionBase} from "../../../questions/questions.base";
 })
 export class InputComponent {
   @Input({required: true}) question!: QuestionBase<string>
+  @Input({required: true}) form!: FormGroup
+
+  isFieldInvalid(question:string):boolean {
+    const control = this.form.get(question);
+    return control! && control.touched && control.invalid;
+  }
 
 }
