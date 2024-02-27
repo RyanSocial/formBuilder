@@ -6,6 +6,7 @@ import {BehaviorSubject, pipe} from "rxjs";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import {checkType} from "../../../../utils";
+import {InputComponent} from "../../../UI/form-controls/input/input.component";
 
 @Component({
   selector: 'app-market-report',
@@ -14,7 +15,8 @@ import {checkType} from "../../../../utils";
     AsyncPipe,
     FormsModule,
     ReactiveFormsModule,
-    JsonPipe
+    JsonPipe,
+    InputComponent
   ],
   providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',

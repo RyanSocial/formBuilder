@@ -12,13 +12,13 @@ export class MarketReportService {
         key: 'broker_id',
         label: 'Broker Id',
         required: true,
-        hide: true
+        placeholder: 'Broker_Id'
       }),
       new TextboxQuestion({
         key: 'name',
         label: 'Market Report Name',
         required: true,
-        placeholder: 'Market Report Name'
+        placeholder: 'Market Report Name',
       }),
       new TextboxQuestion({
         key: 'Original Execution',

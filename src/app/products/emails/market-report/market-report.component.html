@@ -1,18 +1,21 @@
-<div>
+<div class="bg-white shadow-2xl rounded-lg p-5 w-1/2 mx-auto">
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
-    @for (question of questions$ | async;track question) {
-      @if (checkType(question) === 'FormControl' && !question.hide) {
-        {{ question.label }}
+    <div class="">
+      @for (question of questions$ | async;track question) {
+        @if (checkType(question) === 'FormControl' && !question.hide) {
+          <app-input [question]="question"></app-input>
+        }
       }
-    }
-    <div class="form-row">
-      <button class="bg-green-500 px-2 py-1 rounded-md text-white" type="submit">Save</button>
+      <!--      <div class="form-row">-->
+      <!--        <button class="bg-green-500 px-2 py-1 rounded-md text-white" type="submit">Save</button>-->
+      <!--      </div>-->
+      @if (payLoad) {
+        <div class="form-row">
+          <strong>Saved the following values</strong><br>{{ payLoad }}
+        </div>
+      }
     </div>
-    @if (payLoad) {
-      <div class="form-row">
-        <strong>Saved the following values</strong><br>{{ payLoad }}
-      </div>
-    }
   </form>
+
 </div>
 
