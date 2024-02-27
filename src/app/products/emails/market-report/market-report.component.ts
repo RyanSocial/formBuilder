@@ -35,7 +35,7 @@ export class MarketReportComponent implements OnInit {
 
   ngOnInit() {
     // Retrieve questions data in ngOnInit
-    const questions = this.marketReportService.getInfo();
+    const questions = this.marketReportService.getMarketReportQuestions();
     this.questions$.next(questions);
 
     // Create the form group after the questions are available
