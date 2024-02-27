@@ -3,27 +3,54 @@ import {QuestionBase} from "../../../questions/questions.base";
 import {TextboxQuestion} from "../../../questions/question-textbox";
 import {FormGroupQuestion} from "../../../questions/question-formGroup";
 import {of} from "rxjs";
+import {ToggleQuestion} from "../../../questions/question-toggle";
+import {DropdownQuestion} from "../../../questions/question-dropdown";
 
 @Injectable()
 export class MarketReportService {
-  getInfo() {
+  getMarketReportQuestions() {
     const rss_questions: QuestionBase<any>[] = [
       new TextboxQuestion({
         key: 'broker_id',
-        label: 'Broker Id',
         required: true,
-        placeholder: 'Broker_Id'
       }),
       new TextboxQuestion({
         key: 'name',
-        label: 'Market Report Name',
         required: true,
-        placeholder: 'Market Report Name',
       }),
       new TextboxQuestion({
-        key: 'Original Execution',
-        label: 'Original Execution',
+        key: 'original_execution',
         required: true,
+        hide: true
+
+      }),
+      new ToggleQuestion({
+        key: 'preserve_published_date',
+        required: true,
+        checked:true
+      }),
+      new ToggleQuestion({
+        key: 'Error on Empty',
+        required: true,
+        value:true
+      }),
+      new ToggleQuestion({
+        key: 'Use Legacy',
+        required: true,
+        value: true
+      }),
+      new ToggleQuestion({
+        key: 'Generate Market Movements',
+        required: true,
+
+      }),
+      new ToggleQuestion({
+        key: 'Show Mobile Link',
+        required: true,
+      }),
+      new DropdownQuestion({
+        key: 'Locales',
+        options: [{ key: '1', value: 'uk' }]
       })
 
     ]

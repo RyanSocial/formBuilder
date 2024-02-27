@@ -5,7 +5,7 @@
         class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4"
         [ngClass]="warningStyle(question.key)"
         [for]="question.key">
-        {{ question.label }}{{question.required ? ' *' : ''}}
+        {{ question.label }}{{ question.required ? ' *' : '' }}
         @if (isFieldInvalid(question.key)) {
           <div
             class="text-ac-gray-200"
@@ -29,13 +29,22 @@
         </div>
       }
       @case ('toggle') {
+
         <input
           [formControlName]="question.key"
           type="checkbox"
           [checked]="question.value"
           id="some_id"
-          class="appearance-none w-4 h-4 border-2 border-gray-500 rounded-sm bg-white  checked:bg-green-800 checked:border-0"
+          class="appearance-none w-4 h-4  border-2 border-gray-500 rounded-sm bg-white  checked:bg-green-800 checked:border-0"
         />
+
+      }
+      @case ('dropdown') {
+        <select [id]="question.key" [formControlName]="question.key">
+          @for (opt of question.options;track opt) {
+            <option [value]="opt.key">{{ opt.value }}</option>
+          }
+        </select>
       }
     }
   </div>

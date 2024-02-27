@@ -1,0 +1,11 @@
+<p>{{ label }}</p>
+<div (click)="toggleOptions()">
+  <span *ngIf="!selectedValue">{{ label || 'Select...' }}</span>
+  <span *ngIf="selectedValue">{{ selectedValue }}</span>
+</div>
+<div class="options-list" [ngClass]="{ 'hidden': isOpen }">
+  <div *ngFor="let option of options" (click)="selectOption(option.value)">
+    <p>{{ option.value }}</p>
+  </div>
+</div>
+
