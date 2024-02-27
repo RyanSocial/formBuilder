@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, Input, input} from '@angular/core';
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {QuestionBase} from "../../../questions/questions.base";
 
 @Component({
   selector: 'app-input',
@@ -15,5 +16,6 @@ import {MatInputModule} from "@angular/material/input";
   styleUrl: './input.component.css'
 })
 export class InputComponent {
-  Email = new FormControl('',[Validators.required, Validators.email])
+  @Input({required: true}) question!: QuestionBase<string>
+
 }
