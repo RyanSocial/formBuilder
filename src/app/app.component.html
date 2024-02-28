@@ -1,22 +1,3 @@
-
-<!--    <div class="bg-ac-gray-150 p-10">-->
-<!--&lt;!&ndash;      <app-market-report></app-market-report>&ndash;&gt;-->
-<!--      @defer (on showDefer()) {-->
-<!--    <p>This will load      {{showDefer()}}</p>-->
-
-
-<!--      } @placeholder () {-->
-<!--        <p>....loading broker {{showDefer()}}</p>-->
-<!--      }-->
-
-<!--    </div>-->
-    <div>
-     <button class="bg-green-500 px-2 py-1 rounded-md text-white" (click)="setDefer()">Change Defer to true</button>
-      <p>{{showDefer()}}</p>
-      @for (broker of brokers();track broker._id){
-        {{broker.name}}
-      }
-    </div>
-
-
-
+<div class="bg-slate-200 min-h-full pt-10">
+  <app-brokers-list [brokers]="brokerList"></app-brokers-list>
+</div>
