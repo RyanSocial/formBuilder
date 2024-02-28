@@ -1,3 +1,60 @@
-<div class="bg-slate-500">
+<div class="w-5/6 bg-white rounded-md shadow-2xl p-10 mx-auto font-roboto font-light">
+  <!--  Table Info Header-->
+  <div class="w-full grid grid-cols-12 justify-between px-10 items-end">
+    <div class="col-span-8 ">
+      <div class="text-2xl">Brokers</div>
+      <div>A list of brokers for Autochartist including Active status</div>
+    </div>
+    <div class="col-span-4 justify-self-end">
+      <button class="bg-emerald-500 text-white rounded-md px-4 py-1 ">Add broker</button>
+    </div>
+    <!--    Spacer-->
+    <div class="h-10 bg-white">
 
-</div>
+
+
+    </div>
+  </div>
+  <!--  HEADER-->
+  <div class="w-full grid grid-cols-12 justify-between px-1 mx-10">
+    <div class="col-span-3">Broker</div>
+    <div class="col-span-2">Broker ID</div>
+    <div class="col-span-2  flex">Status
+      <label class="inline-flex items-center cursor-pointer pl-2">
+        <input [formControl]="statustoggle" type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ statustoggle.value ? 'Active Brokers' : 'None Active Brokers' }}</span>
+      </label></div>
+  <div class="col-span-5">Actions</div>
+
+    <div class="col-span-12 h-0.5 bg-slate-200 px-10 my-2"></div>
+  </div>
+  <div class="w-full grid grid-cols-12 justify-between px-1 mx-10 focus:border-b-gray-300 pl-1">
+    <input (input)="updateQuery($event)" placeholder="  Start typing..." />
+  </div>
+
+  <!--  Data-->
+  @for (broker of filteredUsers();track broker.name) {
+    <div class=" w-full grid grid-cols-12 justify-between mx-10 my-1 odd:bg-ac-gray-50 even:bg-ac-gray-100 py-2 px-1" (click)="logBroker($event,broker)">
+      <div class="col-span-3">{{ broker.name }}</div>
+      <div class="col-span-2 font-bold">{{ broker.broker_id }}</div>
+      <div class="col-span-2">
+        @if(broker.active) {
+          <span class="bg-emerald-100 text-emerald-500 px-3 py-1 rounded-md">Active</span>
+          } @else {
+          <span class="bg-rose-300 text-rose-700 px-3 py-1 rounded-md">Not Active</span>
+        }
+      </div>
+      <div class="col-span-5"><button (click)="logButtonClick(broker)">Test</button></div>
+
+
+    </div>
+
+  }
+<!--  <button (click)="prevPage()">Previous</button>-->
+<!--  <span>Page {{ currentPage }} of {{ Math.ceil(this.filteredUsers().length / this.pageSize) }}</span>-->
+<!--  <button (click)="nextPage()">Next</button>-->
+<!--</div>-->
+
+
+
