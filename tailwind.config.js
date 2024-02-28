@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'ui-sans-serif', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
+      },
       colors: {
         white: '#ffffff',
         black: '#000000',
@@ -46,6 +49,19 @@ module.exports = {
             900: '#1E2129',
             950: '#161921',
           },
+        },
+        // Sentiment colors
+        emerald: {
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#10B981',
+          700: '#047857',
+        },
+        rose: {
+          300: '#FDA4AF',
+          400: '#FB7185',
+          500: '#E11D48',
+          700: '#BE123C',
         },
       },
     }
