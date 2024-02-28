@@ -12,11 +12,14 @@ export interface Broker {
   performancestatstype: string | null;
   realm_config: any; // Change the type to match the expected data
   logo: any; // Change the type to match the expected data
-  mobile: {
-    show_login: boolean;
-    has_mobile: boolean;
-    mobile_chart_style: string | null;
-    mobile_lead_generation_web_hook: string | null;
-    has_va: boolean;
-  };
+  mobile: Mobile |
+  null
+}
+
+export interface Mobile {
+  show_login: boolean;
+  has_mobile: boolean;
+  mobile_chart_style: string | null;
+  mobile_lead_generation_web_hook: string | null;
+  has_va: boolean;
 }
