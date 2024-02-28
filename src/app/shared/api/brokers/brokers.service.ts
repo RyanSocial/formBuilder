@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Broker} from "../../../models/broker.interface";
-import {environment} from "../../../environments/environement.prod";
+import {Broker} from "../../../../models/broker.interface";
+import {environment} from "../../../../environments/environement.prod";
 
 
 @Injectable({

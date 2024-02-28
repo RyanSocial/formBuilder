@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {BrokersService} from './brokers.service';
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {Broker} from "../../../models/broker.interface";
+import {Broker} from "../../../../models/broker.interface";
 
 const testBroker = {
   "_id": "5db03981873f00615648459c",
