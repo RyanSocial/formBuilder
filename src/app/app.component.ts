@@ -17,13 +17,13 @@ import {BrokersListComponent} from "./brokers/brokers-list/brokers-list.componen
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  brokerList: Broker[] = []
+  brokerList = signal<Broker[]>([])
 
   constructor(private brokersService: BrokersService) {
     this.brokersService.getBrokers().subscribe({
       next: brokers => {
         console.log('Broker recieved', brokers)
-        this.brokerList = brokers}
+        this.brokerList.set(brokers)}
     })
   }
 }
