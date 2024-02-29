@@ -18,7 +18,6 @@ import {BrokersListComponent} from "./brokers/brokers-list/brokers-list.componen
 })
 export class AppComponent {
   brokerList = signal<Broker[]>([])
-
   constructor(private brokersService: BrokersService) {
     this.brokersService.getBrokers().subscribe({
       next: brokers => {
