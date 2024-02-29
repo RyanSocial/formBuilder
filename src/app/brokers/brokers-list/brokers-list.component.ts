@@ -1,23 +1,29 @@
 import {ChangeDetectionStrategy, Component, computed, Input, input, signal} from '@angular/core';
 import {Broker} from "../../../models/broker.interface";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ProductsComponent} from "../products/products/products.component";
 
 @Component({
   selector: 'app-brokers-list',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProductsComponent,
+    FormsModule
   ],
   templateUrl: './brokers-list.component.html',
   styleUrl: './brokers-list.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrokersListComponent {
   brokers = input.required<Broker[]>()
-  statustoggle = new FormControl(true)
   currentPage: number = 1; // Current page number (starts at 1)
-  pageSize: number = 10; // Number of items per page
-  // @Input() brokers!: Broker[]
+  pageSize: number = 20; // Number of items per page
+  products = signal(false)
+  activeToggle = signal<boolean>(true)
+  selectedBroker = signal<Broker | undefined>(undefined)
+
+
   logBroker(event: Event, broker: any) {
     event.stopPropagation()
     console.log(broker)
@@ -25,21 +31,27 @@ export class BrokersListComponent {
 
 
   protected filteredUsers = computed(() => {
-    console.log(this.statustoggle.value)
-      const allBrokers = this.brokers().filter(({name}) =>
-        name.toLocaleLowerCase().startsWith(this.query())
+      this.currentPage = 1
+      this.pageSize = 20
+      const brokers = this.brokers().filter(({name}) =>
+        name.toLocaleLowerCase().startsWith(this.query().toLocaleLowerCase())
       )
-      if (this.statustoggle.value) {
-        return allBrokers.filter((broker => {
-         return broker.active === true
+      if (this.activeToggle()) {
+        return brokers.filter((broker) => {
+          return broker.active
+        })
+      } else {
+        return brokers.filter((broker) => {
+          return !broker.active
+        })
+      }
 
-        }))
-      }
-      else {
-        return allBrokers
-      }
     }
   );
+
+  filterByStatus(brokers: Broker[]) {
+    return brokers.filter(broker => broker.active)
+  }
 
 
   query = signal('');
@@ -49,22 +61,26 @@ export class BrokersListComponent {
   }
 
   logButtonClick(broker: Broker) {
+    this.selectedBroker.set(broker)
+    this.products.set(true)
     event?.stopPropagation()
-    console.log('Buttons Clicked', broker)
   }
 
   protected readonly Math = Math;
 
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
+  get totalPages(): number {
+    return Math.ceil(this.filteredUsers().length / this.pageSize);
   }
 
-  nextPage() {
-    const totalPages = Math.ceil(this.filteredUsers().length / this.pageSize);
-    if (this.currentPage < totalPages) {
-      this.currentPage++;
-    }
+  getUsersForPage(): Broker[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredUsers().slice(startIndex, startIndex + this.pageSize);
   }
+
+  onCheckboxChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.activeToggle.set(!this.activeToggle())
+    console.log(this.activeToggle())
+  }
+
 }
