@@ -10,5 +10,7 @@ export const checkType = <T>(obj: T): string => {
   return 'FormControl'
 }
 
-
+export const createNavLinkPlaceholder = (key: string): string => {
+  return key.split("-").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+}
 
