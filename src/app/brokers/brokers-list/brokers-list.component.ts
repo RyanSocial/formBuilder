@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, Input, input, signal} from
 import {Broker} from "../../../models/broker.interface";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductsComponent} from "../products/products/products.component";
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-brokers-list',
@@ -18,11 +19,13 @@ import {ProductsComponent} from "../products/products/products.component";
 export class BrokersListComponent {
   brokers = input.required<Broker[]>()
   currentPage: number = 1; // Current page number (starts at 1)
-  pageSize: number = 20; // Number of items per page
+  pageSize: number = 30; // Number of items per page
   products = signal(false)
   activeToggle = signal<boolean>(true)
   selectedBroker = signal<Broker | undefined>(undefined)
 
+  constructor(private scroller: ViewportScroller) {
+  }
 
   logBroker(event: Event, broker: any) {
     event.stopPropagation()
@@ -32,7 +35,6 @@ export class BrokersListComponent {
 
   protected filteredUsers = computed(() => {
       this.currentPage = 1
-      this.pageSize = 20
       const brokers = this.brokers().filter(({name}) =>
         name.toLocaleLowerCase().startsWith(this.query().toLocaleLowerCase())
       )
@@ -63,7 +65,10 @@ export class BrokersListComponent {
   logButtonClick(broker: Broker) {
     this.selectedBroker.set(broker)
     this.products.set(true)
-    event?.stopPropagation()
+const scrollloc = document.getElementById('brokerProducts')
+    console.log(scrollloc)
+    // event?.stopPropagation()
+    this.scroller.scrollToPosition([0,0])
   }
 
   protected readonly Math = Math;
