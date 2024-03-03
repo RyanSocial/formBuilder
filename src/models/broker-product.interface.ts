@@ -1,8 +1,4 @@
-export interface BrokerProductInterface {
-  resource: product[]
-}
-
-interface product {
+export interface Product {
   broker_id: string;
   product_name: string;
 }
