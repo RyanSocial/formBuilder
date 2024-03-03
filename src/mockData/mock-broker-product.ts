@@ -1,6 +1,7 @@
-import {BrokerProductInterface} from "../models/broker-product.interface";
+import {ProductResource} from "../app/shared/api/broker-products/broker-products.service";
 
-export const mockBrokerProducts: BrokerProductInterface = {
+
+export const mockBrokerProducts: ProductResource = {
   "resource": [
     {
       "broker_id": "24",
