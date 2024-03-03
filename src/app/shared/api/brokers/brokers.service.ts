@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Broker} from "../../../../models/broker.interface";
 import {environment} from "../../../../environments/environement.prod";
+import {toSignal} from "@angular/core/rxjs-interop";
+
 
 
 @Injectable({
@@ -20,4 +22,8 @@ export class BrokersService {
   getBrokers(): Observable<Broker[]> {
     return this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers:this.headers})
   }
+
+  private getBrokersObs$ = this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers:this.headers})
+
+  brokerSignal = toSignal(this.getBrokersObs$)
 }
