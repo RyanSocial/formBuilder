@@ -1,3 +1,6 @@
 <div class="bg-slate-200 min-h-full pt-10">
-  <app-brokers-list [brokers]="brokerList()"></app-brokers-list>
+  <app-nav-bar></app-nav-bar>
+  <router-outlet></router-outlet>
+
+  <!--  <app-dropdown [label]="'Dropdown Test'" [options]="options" [formControlName]="'locale'"></app-dropdown>-->
 </div>
