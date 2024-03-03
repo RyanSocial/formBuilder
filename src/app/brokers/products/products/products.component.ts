@@ -4,6 +4,7 @@ import {BrokerProductsService} from "../../../shared/api/broker-products/broker-
 import {JsonPipe} from "@angular/common";
 import {SelectBrokerService} from "../../../shared/services/select-broker/select-broker.service";
 import {Product} from "../../../../models/broker-product.interface";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-products',
@@ -23,7 +24,7 @@ export class ProductsComponent implements OnInit {
     this.closeProduct.emit(false)
   }
 
-  constructor(private brokerProductsService: BrokerProductsService, private selectBrokerService: SelectBrokerService) {
+  constructor(private brokerProductsService: BrokerProductsService, private selectBrokerService: SelectBrokerService, private router: Router) {
     this.broker.set(this.selectBrokerService.getSelectedBroker())
   }
 
@@ -36,7 +37,11 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  // emailProducts = computed( () => {
-  //   return this.products()?
-  // })
+  emailProducts = computed(() => {
+    return this.products()?.filter(product => product.product_name.toLowerCase().includes('email'))
+  })
+
+  configureEmail() {
+    this.router.navigate(['/emails'], {state: {emails: this.emailProducts()}});
+  }
 }
