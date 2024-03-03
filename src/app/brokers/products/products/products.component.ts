@@ -1,8 +1,9 @@
-import {Component, EventEmitter, input, OnInit, Output, signal} from '@angular/core';
+import {Component, computed, EventEmitter, input, OnInit, Output, signal} from '@angular/core';
 import {Broker} from "../../../../models/broker.interface";
 import {BrokerProductsService} from "../../../shared/api/broker-products/broker-products.service";
-import {BrokerProductInterface} from "../../../../models/broker-product.interface";
 import {JsonPipe} from "@angular/common";
+import {SelectBrokerService} from "../../../shared/services/select-broker/select-broker.service";
+import {Product} from "../../../../models/broker-product.interface";
 
 @Component({
   selector: 'app-products',
@@ -15,14 +16,15 @@ import {JsonPipe} from "@angular/common";
 })
 export class ProductsComponent implements OnInit {
   @Output() closeProduct: EventEmitter<boolean> = new EventEmitter<boolean>()
-  broker = input.required<Broker | undefined>()
-  products = signal<BrokerProductInterface | undefined>(undefined)
+  broker = signal<Broker | undefined>(undefined)
+  products = signal<Product[] | undefined>(undefined)
 
   closeProducts() {
     this.closeProduct.emit(false)
   }
 
-  constructor(private brokerProductsService: BrokerProductsService) {
+  constructor(private brokerProductsService: BrokerProductsService, private selectBrokerService: SelectBrokerService) {
+    this.broker.set(this.selectBrokerService.getSelectedBroker())
   }
 
   ngOnInit() {
@@ -32,6 +34,9 @@ export class ProductsComponent implements OnInit {
         this.products.set(value)
       }
     })
-    console.log(this.products())
   }
+
+  // emailProducts = computed( () => {
+  //   return this.products()?
+  // })
 }
