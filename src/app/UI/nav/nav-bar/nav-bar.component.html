@@ -1,16 +1,17 @@
-<nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between mb-5">
+<nav class="w-5/6 mx-auto p-5 bg-white shadow md:flex md:items-center md:justify-between mb-5">
   <div class="flex justify-between items-center ">
       <span class="text-2xl font-[Poppins] cursor-pointer">
         <img class="h-10 inline"
-             src="https://tailwindcss.com/_next/static/media/social-square.b622e290e82093c36cca57092ffe494f.jpg">
-        tailwind
+             src="./assets/autochartist-logo.png">
       </span>
 
     <span class="text-3xl cursor-pointer mx-2 md:hidden block">
 
       </span>
   </div>
-
+  <div>
+    {{selectedBroker() ?  selectedBroker().name : 'Welcome to AutoChartist'}}
+  </div>
   <ul
     class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
    @for(link of routes;track link.linkRef) {
