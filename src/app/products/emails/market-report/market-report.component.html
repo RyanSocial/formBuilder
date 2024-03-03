@@ -1,4 +1,4 @@
-<div class="bg-white shadow-2xl rounded-lg p-5 w-1/2 mx-auto">
+<div class="bg-white shadow-2xl rounded-lg p-5 w-full ">
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
     <div class="">
       @for (question of questions$ | async;track question) {
