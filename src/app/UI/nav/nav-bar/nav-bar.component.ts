@@ -22,8 +22,6 @@ export class NavBarComponent {
 
   routes: MenuLinkInterface[] = [{
     name: 'Brokers', linkRef: 'ac-broker-manager',
-  },
-    {
-      name: 'emails', linkRef: 'emails'
-    }]
+  }
+    ]
 }
