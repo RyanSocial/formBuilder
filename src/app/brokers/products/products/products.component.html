@@ -7,22 +7,48 @@
     <div class="text-2xl pr-2">{{ broker()?.name }}</div>
     <div class="pl-2 text-2xl font-bold">{{ broker()?.broker_id }}</div>
   </div>
-  <div class="">
+  <div class="p-2">
     @defer {
-      <div class=" flex mx-1 justify-between mb-3 align-baseline">
-        <div class="text-xl">Emails</div>
-        <button class="bg-slate-600 text-white rounded-md px-4 py-1" (click)="configureEmail()">Configure</button>
-      </div>
-      <div class="flex flex-wrap">
-        @if (emailProducts()!.length > 0) {
-          @for (email of emailProducts();track email) {
-            <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ email.product_name }}</p>
+      <!--      Emails-->
+        <!--      Container-->
+      <div class="border-2 border-emerald-300 shadow-2xl rounded-lg p-2 mb-5">
+        <!--      Content-->
+        <div class=" flex mx-1 justify-between mb-3 align-baseline">
+          <div class="text-xl">Emails</div>
+          <button *ngIf="emailProducts()!.length > 0" class="bg-slate-600 text-white rounded-md px-4 py-1"
+                  (click)="configureEmail()">Configure
+          </button>
+        </div>
+        <div class="flex flex-wrap mb-5">
+          @if (emailProducts()!.length > 0) {
+            @for (email of emailProducts();track email) {
+              <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ email.product_name | formatProductTitle}}</p>
+            }
+          } @else {
+            <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">No Emails configured</p>
           }
-        } @else {
-          <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">No Emails configured</p>
-        }
+        </div>
       </div>
-
+      <!--      Products-->
+        <!--      Container-->
+      <div class="border-2 border-emerald-300 shadow-2xl rounded-lg p-2 mb-5">
+        <!--      Content-->
+        <div class=" flex mx-1 justify-between mb-3 align-baseline">
+          <div class="text-xl">Products</div>
+          <button *ngIf="WebProducts()!.length > 0" class="bg-slate-600 text-white rounded-md px-4 py-1"
+                  (click)="configureEmail()">Configure
+          </button>
+        </div>
+        <div class="flex flex-wrap mb-5">
+          @if (WebProducts()!.length > 0) {
+            @for (webProduct of WebProducts();track webProduct) {
+              <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ webProduct.product_name  | formatProductTitle}}</p>
+            }
+          } @else {
+            <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">No Emails configured</p>
+          }
+        </div>
+      </div>
 
     } @loading (minimum 1s) {
       <p>Loading Products</p>
