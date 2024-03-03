@@ -4,7 +4,8 @@
     <button (click)="closeProducts()" class="h-10 w-10 bg-slate-600 text-white rounded-full">X</button>
   </div>
   <div class=" flex mx-1 divide-x-2 divide-ac-button-200 mb-2">
-    <div class="text-2xl pr-2">{{ broker()?.name }}</div>  <div class="pl-2 text-2xl font-bold">{{ broker()?.broker_id }}</div>
+    <div class="text-2xl pr-2">{{ broker()?.name }}</div>
+    <div class="pl-2 text-2xl font-bold">{{ broker()?.broker_id }}</div>
   </div>
   <div class="">
     @defer {
@@ -12,11 +13,15 @@
         <div class="text-xl">Emails</div>
         <button class="bg-slate-600 text-white rounded-md px-4 py-1" (click)="configureEmail()">Configure</button>
       </div>
-        <div class="flex">
+      <div class="flex flex-wrap">
+        @if (emailProducts()!.length > 0) {
           @for (email of emailProducts();track email) {
             <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ email.product_name }}</p>
           }
-        </div>
+        } @else {
+          <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">No Emails configured</p>
+        }
+      </div>
 
 
     } @loading (minimum 1s) {
