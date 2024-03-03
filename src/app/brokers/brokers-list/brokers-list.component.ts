@@ -3,6 +3,9 @@ import {Broker} from "../../../models/broker.interface";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductsComponent} from "../products/products/products.component";
 import {ViewportScroller} from "@angular/common";
+import {BrokersService} from "../../shared/api/brokers/brokers.service";
+import {SelectBrokerService} from "../../shared/services/select-broker/select-broker.service";
+
 
 @Component({
   selector: 'app-brokers-list',
@@ -14,46 +17,43 @@ import {ViewportScroller} from "@angular/common";
   ],
   templateUrl: './brokers-list.component.html',
   styleUrl: './brokers-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrokersListComponent {
-  brokers = input.required<Broker[]>()
-  currentPage: number = 1; // Current page number (starts at 1)
-  pageSize: number = 30; // Number of items per page
+  brokers = this.brokersService.brokerSignal
+  currentPage = signal<number>(1)
+  pageSize = signal<number>(30)
   products = signal(false)
   activeToggle = signal<boolean>(true)
-  selectedBroker = signal<Broker | undefined>(undefined)
 
-  constructor(private scroller: ViewportScroller) {
+
+  constructor(private brokersService: BrokersService, private scroller: ViewportScroller, private selectBrokerService: SelectBrokerService) {
   }
 
   logBroker(event: Event, broker: any) {
     event.stopPropagation()
-    console.log(broker)
+    this.selectBrokerService.setBroker(broker)
+
   }
 
 
   protected filteredUsers = computed(() => {
-      this.currentPage = 1
-      const brokers = this.brokers().filter(({name}) =>
+
+      const brokers = this.brokers()?.filter(({name}) =>
         name.toLocaleLowerCase().startsWith(this.query().toLocaleLowerCase())
       )
       if (this.activeToggle()) {
-        return brokers.filter((broker) => {
+        return brokers?.filter((broker) => {
           return broker.active
         })
       } else {
-        return brokers.filter((broker) => {
+        return brokers?.filter((broker) => {
           return !broker.active
         })
       }
 
     }
   );
-
-  filterByStatus(brokers: Broker[]) {
-    return brokers.filter(broker => broker.active)
-  }
 
 
   query = signal('');
@@ -63,23 +63,23 @@ export class BrokersListComponent {
   }
 
   logButtonClick(broker: Broker) {
-    this.selectedBroker.set(broker)
+    this.selectBrokerService.setBroker(broker)
     this.products.set(true)
-const scrollloc = document.getElementById('brokerProducts')
-    console.log(scrollloc)
-    // event?.stopPropagation()
-    this.scroller.scrollToPosition([0,0])
+    event?.stopPropagation()
+
   }
 
   protected readonly Math = Math;
 
-  get totalPages(): number {
-    return Math.ceil(this.filteredUsers().length / this.pageSize);
-  }
+
 
   getUsersForPage(): Broker[] {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.filteredUsers().slice(startIndex, startIndex + this.pageSize);
+    const startIndex = (this.currentPage() - 1) * this.pageSize();
+    if (this.filteredUsers()) {
+      return this.filteredUsers()!.slice(startIndex, startIndex + this.pageSize());
+    }
+    return []
+
   }
 
   onCheckboxChange(event: Event) {

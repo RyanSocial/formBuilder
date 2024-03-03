@@ -1,10 +1,11 @@
 <div class="w-5/6 bg-white rounded-md shadow-2xl p-10 mx-auto font-roboto font-light relative">
   <!--  Table Info Header-->
   <div class="w-full grid grid-cols-12 justify-between px-10 items-end">
-    <div class="col-span-8 ">
+    <div class="col-span-6 ">
       <div class="text-2xl">Brokers</div>
       <div>A list of brokers for Autochartist including Active status</div>
-    </div>
+    </div >
+
     <div class="col-span-4 justify-self-end">
       <button class="bg-emerald-500 text-white rounded-md px-4 py-1 ">Add broker</button>
     </div>
@@ -57,23 +58,14 @@
     </div>
 
   }
-  <div id="testScroll">
-    <p>Test</p>
-  </div>
+
   <div id="brokerProducts">
     @if (products()) {
-
-      <app-products (closeProduct)="products.set(false)" [broker]="selectedBroker()"></app-products>
-
+      <app-products (closeProduct)="products.set(false)"></app-products>
     }
   </div>
 
 
-  <div>
-    <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Previous</button>
-    <span>{{ currentPage }} / {{ totalPages }}</span>
-    <button [disabled]="currentPage === totalPages" (click)="currentPage = currentPage + 1">Next</button>
-  </div>
 
 
 
