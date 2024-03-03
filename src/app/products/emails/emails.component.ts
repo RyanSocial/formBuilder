@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {RouterLink, RouterOutlet} from "@angular/router";
+import {Component, OnInit, signal} from '@angular/core';
+import {Router, RouterLink, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-emails',
@@ -11,6 +11,14 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   templateUrl: './emails.component.html',
   styleUrl: './emails.component.css'
 })
-export class EmailsComponent {
+export class EmailsComponent implements OnInit {
+  emails = signal<string[] | undefined>(undefined)
 
+  constructor(private router: Router) {
+  }
+
+  ngOnInit() {
+    this.emails.set(this.router.getCurrentNavigation()?.extras?.state?.['emails'])
+
+  }
 }
