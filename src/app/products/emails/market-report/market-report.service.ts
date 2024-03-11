@@ -109,8 +109,19 @@ export class MarketReportService {
       new FormGroupArray({
         key: 'testFormArray',
         required: true,
-        simpleArray:true,
-        options: [{key : 'Option 1', value: '1'}, {key: 'Option 2', value: '2'}]
+        simpleArray: true,
+        options: [{key: 'Option 1', value: '1'}, {key: 'Option 2', value: '2'}]
+      }),
+      new FormGroupArray({
+        key: 'complex_array',
+        required: true,
+        simpleArray: false,
+        nestedQuestions: [
+          new TextboxQuestion({
+            key: 'fake_key',
+            required: true,
+          })
+        ]
       })
 
     ]
