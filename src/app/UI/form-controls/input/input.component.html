@@ -1,18 +1,12 @@
-<div [formGroup]="form">
+<div>
   <div class="md:flex md:items-center mb-6">
     <div class="md:w-1/3">
       <label
         class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4"
-        [ngClass]="warningStyle(question.key)"
+
         [for]="question.key">
         {{ question.label }}{{ question.required ? ' *' : '' }}
-        @if (isFieldInvalid(question.key)) {
-          <div
-            class="text-ac-gray-200"
-            [ngClass]="warningStyle(question.key)"
-          >*is required
-          </div>
-        }
+
       </label>
     </div>
     @switch (question.controlType) {
@@ -23,7 +17,7 @@
             [formControlName]="question.key"
             [placeholder]="question.placeholder"
             class="bg-gray-200  appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-            [ngClass]="isFieldInvalid(question.key)"
+
             [id]="question.key" [type]="question.controlType">
 
         </div>

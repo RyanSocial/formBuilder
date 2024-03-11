@@ -1,7 +1,7 @@
 import {Component, computed, EventEmitter, input, OnInit, Output, signal} from '@angular/core';
 import {Broker} from "../../../../models/broker.interface";
 import {BrokerProductsService} from "../../../shared/api/broker-products/broker-products.service";
-import {JsonPipe, NgIf} from "@angular/common";
+import {JsonPipe, LowerCasePipe, NgIf} from "@angular/common";
 import {SelectBrokerService} from "../../../shared/services/select-broker/select-broker.service";
 import {Product} from "../../../../models/broker-product.interface";
 import {Router} from "@angular/router";
@@ -13,7 +13,8 @@ import {FormatProductTitlePipe} from "../../../pipes/product/format-product-titl
   imports: [
     JsonPipe,
     NgIf,
-    FormatProductTitlePipe
+    FormatProductTitlePipe,
+    LowerCasePipe
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
@@ -32,10 +33,8 @@ export class ProductsComponent implements OnInit {
   }
 
 
-
   ngOnInit() {
     this.brokerProductsService.getBrokerProducts(this.broker()?.broker_id!).subscribe({
-
       next: value => {
         this.products.set(value)
       }
@@ -51,11 +50,12 @@ export class ProductsComponent implements OnInit {
   })
 
 
-
   configureEmail() {
-    this.router.navigate(['/emails'], {state: {emails: this.emailProducts()}});
+    this.selectBrokerService.updateEmails(this.emailProducts())
+    this.router.navigateByUrl(`emails/${this.broker()?.broker_id}`)
   }
+
   configureProducts() {
-    this.router.navigate(['/products'], {state: {emails: this.WebProducts()}});
+    this.router.navigate(['/products'], {state: {webProducts: this.WebProducts()}});
   }
 }

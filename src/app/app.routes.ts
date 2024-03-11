@@ -9,10 +9,10 @@ export const routes: Routes = [
   {path: 'ac-broker-manager', component: BrokersListComponent},
   {path: '', redirectTo: '/ac-broker-manager', pathMatch: 'full'},
   {
-    path: 'emails',
+    path: 'emails/:broker_id',
     component: EmailsComponent,
     children: [{
-      path: 'market-reports', // child route path
+      path: 'market_report_email', // child route path
       component: MarketReportComponent, // child route component that the router renders
     },]
   },

@@ -7,6 +7,7 @@ import {QuestionControlService} from "../../../shared/services/question-control-
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import {checkType} from "../../../../utils";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
+import {FormControllerComponent} from "../../../UI/form-controls/form-controller/form-controller.component";
 
 @Component({
   selector: 'app-market-report',
@@ -16,14 +17,15 @@ import {InputComponent} from "../../../UI/form-controls/input/input.component";
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    InputComponent
+    InputComponent,
+    FormControllerComponent
   ],
   providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',
   styleUrl: './market-report.component.css'
 })
 export class MarketReportComponent implements OnInit {
-  questions$ = new BehaviorSubject<QuestionBase<string>[]>([]);
+  questions$ = new BehaviorSubject<QuestionBase<any>[]>([]);
   markReportForm!: FormGroup;
   payLoad: string = ''
 
@@ -40,6 +42,7 @@ export class MarketReportComponent implements OnInit {
 
     // Create the form group after the questions are available
     this.markReportForm = this.questionControlService.toFormGroup(this.questions$.getValue() as QuestionBase<string>[]);
+
   }
 
   onSubmit() {
