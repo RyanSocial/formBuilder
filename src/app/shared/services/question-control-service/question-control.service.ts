@@ -55,7 +55,7 @@ export class QuestionControlService {
     return group
   }
 
-  private createNewArray(nestedQuestions: QuestionBase<string>[]) {
+  private createNewArray(nestedQuestions: QuestionBase<any>[]) {
     const arrayValue = this.toFormGroup(nestedQuestions)
     return new FormArray([arrayValue])
   }
