@@ -1,12 +1,10 @@
 <div class="bg-white shadow-2xl rounded-lg p-5 w-full ">
-  <pre>{{markReportForm.value | json}}</pre>
+  <pre>{{ markReportForm.value | json }}</pre>
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
+    <div>
+      <app-form-controller [questions]="questions$|async"></app-form-controller>
+    </div>
     <div class="">
-      @for (question of questions$ | async;track question) {
-        @if (checkType(question) === 'FormControl' && !question.hide) {
-          <app-input [question]="question"></app-input>
-        }
-      }
       <div class="form-row">
         <button class="bg-green-500 px-2 py-1 rounded-md text-white" type="submit">Save</button>
       </div>
