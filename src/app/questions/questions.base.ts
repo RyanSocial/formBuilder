@@ -19,6 +19,7 @@ export class QuestionBase<T> {
   nestedFormGroup?:QuestionBase<any>[] = [];
   placeholder?:string
   hide: boolean
+  simpleArray: boolean
 
   constructor(options: {
     value?: T;
@@ -35,6 +36,7 @@ export class QuestionBase<T> {
     nestedQuestions?: QuestionBase<string>[];
     nestedFormGroup?:QuestionBase<any>[]
     hide?: boolean
+    simpleArray? :boolean
 
 
   } = {}) {
@@ -51,6 +53,7 @@ export class QuestionBase<T> {
     this.nestedFormGroup = options.nestedFormGroup || []
     this.hide = options.hide || false
     this.placeholder = options.placeholder || this.createPlaceholder(this.key)
+    this.simpleArray = options.simpleArray || false
   }
 }
 
