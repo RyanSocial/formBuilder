@@ -1,9 +1,10 @@
 <div class="bg-white shadow-2xl rounded-lg p-5 w-full ">
+  <pre>{{markReportForm.value | json}}</pre>
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
     <div class="">
       @for (question of questions$ | async;track question) {
         @if (checkType(question) === 'FormControl' && !question.hide) {
-          <app-input [question]="question" [form]="markReportForm"></app-input>
+          <app-input [question]="question"></app-input>
         }
       }
       <div class="form-row">
