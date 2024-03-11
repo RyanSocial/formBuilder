@@ -15,7 +15,7 @@ export class QuestionBase<T> {
   type: string;
   options: { key: string, value: string }[];
   checked: boolean;
-  nestedQuestions?: QuestionBase<string>[] = [];
+  nestedQuestions?: QuestionBase<any>[] = [];
   nestedFormGroup?:QuestionBase<any>[] = [];
   placeholder?:string
   hide: boolean
@@ -33,7 +33,7 @@ export class QuestionBase<T> {
     checked?:boolean
     formGroupData? : { key: string, value: string }[]
     placeholder?:string
-    nestedQuestions?: QuestionBase<string>[];
+    nestedQuestions?: QuestionBase<any>[];
     nestedFormGroup?:QuestionBase<any>[]
     hide?: boolean
     simpleArray? :boolean
