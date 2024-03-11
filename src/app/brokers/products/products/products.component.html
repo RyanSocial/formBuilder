@@ -15,14 +15,14 @@
         <!--      Content-->
         <div class=" flex mx-1 justify-between mb-3 align-baseline">
           <div class="text-xl">Emails</div>
-          <button *ngIf="emailProducts()!.length > 0" class="bg-slate-600 text-white rounded-md px-4 py-1"
+          <button  class="bg-slate-600 text-white rounded-md px-4 py-1"
                   (click)="configureEmail()">Configure
           </button>
         </div>
         <div class="flex flex-wrap mb-5">
           @if (emailProducts()!.length > 0) {
             @for (email of emailProducts();track email) {
-              <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ email.product_name | formatProductTitle}}</p>
+              <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">{{ email.product_name  }}</p>
             }
           } @else {
             <p class="bg-ac-button-350 text-white px-3 py-1 rounded-md my-1 mr-2">No Emails configured</p>
@@ -35,8 +35,8 @@
         <!--      Content-->
         <div class=" flex mx-1 justify-between mb-3 align-baseline">
           <div class="text-xl">Products</div>
-          <button *ngIf="WebProducts()!.length > 0" class="bg-slate-600 text-white rounded-md px-4 py-1"
-                  (click)="configureEmail()">Configure
+          <button  class="bg-slate-600 text-white rounded-md px-4 py-1"
+                  (click)="configureProducts()">Configure
           </button>
         </div>
         <div class="flex flex-wrap mb-5">
