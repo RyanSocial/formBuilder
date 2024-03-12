@@ -6,10 +6,10 @@ import {FormGroupQuestion} from "../../../questions/question-formGroup";
 
 @Injectable()
 export class QuestionControlService {
-  toFormGroup(questions: QuestionBase<any>[]) {
+  toFormGroup(questions: QuestionBase<any>[], buildArray: boolean = false) {
     const group: any = {};
     questions.forEach((question) => {
-      if (question.controlType === 'FormGroupArray') {
+      if (question.controlType === 'FormGroupArray' && buildArray) {
         // Create a FormArray and push a nested FormGroup with nested controls
         const nestedFormGroup = new FormGroup({});
         question.nestedQuestions!.forEach((nestedQuestion) => {
@@ -32,7 +32,7 @@ export class QuestionControlService {
       } else if (question.controlType === 'FormGroup') {
 
         group[question.key] = this.createFormGroup(question.nestedFormGroup!)
-      } else {
+      } else if (question.controlType !== 'FormGroup' && question.controlType !== 'FormGroupArray') {
         group[question.key] = question.required
           ? new FormControl(question.value || '', Validators.required)
           : new FormControl(question.value || '');
@@ -41,7 +41,7 @@ export class QuestionControlService {
     return new FormGroup(group);
   }
 
-   createFormGroup(controlsArray: QuestionBase<any>[]) {
+  createFormGroup(controlsArray: QuestionBase<any>[]) {
     const group = new FormGroup({})
     controlsArray.forEach(control => {
       group.addControl(
