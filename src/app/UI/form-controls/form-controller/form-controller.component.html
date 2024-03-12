@@ -1,0 +1,10 @@
+@for (question of questions;track question.key) {
+  @if (checkType(question) === 'FormControl') {
+    <app-input [question]="question"></app-input>
+  }
+  @if (checkType(question) === 'FormGroup') {
+    <div [formGroupName]="question.key">
+      <app-form-controller [questions]="question.nestedFormGroup!"></app-form-controller>
+    </div>
+  }
+}
