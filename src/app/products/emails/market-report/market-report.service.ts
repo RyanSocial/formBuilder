@@ -107,19 +107,37 @@ export class MarketReportService {
         ]
       }),
       new FormGroupArray({
-        key: 'testFormArray',
-        required: true,
-        simpleArray: true,
-        options: [{key: 'Option 1', value: '1'}, {key: 'Option 2', value: '2'}]
-      }),
-      new FormGroupArray({
-        key: 'complex_array',
+        key: 'address',
         required: true,
         simpleArray: false,
         nestedQuestions: [
           new TextboxQuestion({
-            key: 'fake_key',
+            key: 'street',
             required: true,
+          }),
+          new TextboxQuestion({
+            key: 'house_number',
+            required: true
+          }),
+          new FormGroupQuestion({
+            key: 'features',
+            required: true,
+            nestedFormGroup: [
+              new TextboxQuestion({
+                key: 'pool',
+                required: true,
+              }),
+            ]
+          }),
+          new FormGroupArray({
+            key: 'household_members',
+            required: true,
+            simpleArray: false,
+            nestedQuestions: [new TextboxQuestion({
+              key: 'member_name',
+              required: true,
+            }),
+            ]
           })
         ]
       })
