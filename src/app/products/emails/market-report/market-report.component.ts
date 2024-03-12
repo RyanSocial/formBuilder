@@ -9,6 +9,7 @@ import {checkType} from "../../../../utils";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
 import {FormControllerComponent} from "../../../UI/form-controls/form-controller/form-controller.component";
 
+
 @Component({
   selector: 'app-market-report',
   standalone: true,
@@ -18,7 +19,8 @@ import {FormControllerComponent} from "../../../UI/form-controls/form-controller
     ReactiveFormsModule,
     JsonPipe,
     InputComponent,
-    FormControllerComponent
+    FormControllerComponent,
+
   ],
   providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',
