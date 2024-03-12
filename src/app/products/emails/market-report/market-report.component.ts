@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MarketReportService} from "./market-report.service";
 import {QuestionBase} from "../../../questions/questions.base";
-import {BehaviorSubject, pipe} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import {checkType} from "../../../../utils";
@@ -20,11 +20,11 @@ import {FormControllerComponent} from "../../../UI/form-controls/form-controller
     JsonPipe,
     InputComponent,
     FormControllerComponent,
-
   ],
   providers: [MarketReportService, QuestionControlService],
   templateUrl: './market-report.component.html',
-  styleUrl: './market-report.component.css'
+  styleUrl: './market-report.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketReportComponent implements OnInit {
   questions$ = new BehaviorSubject<QuestionBase<any>[]>([]);
