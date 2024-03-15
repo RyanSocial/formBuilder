@@ -7,6 +7,7 @@ import {FormGroupQuestion} from "../../../questions/question-formGroup";
 @Injectable()
 export class QuestionControlService {
   toFormGroup(questions: QuestionBase<any>[], buildArray: boolean = false) {
+
     const group: any = {};
     questions.forEach((question) => {
       if (question.controlType === 'FormGroupArray' && buildArray) {
@@ -38,12 +39,22 @@ export class QuestionControlService {
           : new FormControl(question.value || '');
       }
     });
+    if (buildArray) {
+      return group
+    }
     return new FormGroup(group);
   }
 
   createFormGroup(controlsArray: QuestionBase<any>[]) {
     const group = new FormGroup({})
     controlsArray.forEach(control => {
+      if (control.controlType === 'FormGroup') {
+        const subGroup = new FormGroup({})
+        control.nestedFormGroup?.forEach(control => {
+          subGroup.addControl(control.key, new FormControl)
+        })
+        group.addControl(control.key, subGroup)
+      }
       group.addControl(
         control.key,
         new FormControl(
