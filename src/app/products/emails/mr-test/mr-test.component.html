@@ -1,0 +1,58 @@
+@if (formControls.length > 0) {
+<!--  General Controls-->
+
+  <div class="shadow-2xl p-5 rounded-md my-2">
+    <p class="uppercase text-center pb-4">General</p>
+    @for (control of formControls;track control.key) {
+      <app-input [question]="control"></app-input>
+    }
+  </div>
+}
+
+<!--Filter Controls-->
+
+<div formGroupName="filter" class="shadow-2xl p-5 rounded-md my-2">
+  <p class="uppercase text-center pb-4">Filter</p>
+  @for (control of filterControls;track control.key) {
+    <app-input [question]="control"></app-input>
+  }
+</div>
+
+<!--Chart Controls-->
+
+<div formGroupName="chart" class="shadow-2xl p-5 rounded-md my-2">
+  <p class="uppercase text-center pb-4">Chart</p>
+  @for (control of chartControls;track control.key) {
+    <app-input [question]="control"></app-input>
+  }
+</div>
+
+<!--Template Controls-->
+
+<div formGroupName="template" class="shadow-2xl p-5 rounded-md my-2">
+  <p class="uppercase text-center pb-4">Template</p>
+  @for (control of templateControls;track control.key) {
+    <app-input [question]="control"></app-input>
+  }
+</div>
+
+
+<!--Message controls-->
+<div formGroupName="messages" class="shadow-2xl p-5 rounded-md my-2">
+  <p class="uppercase text-center pb-4">Message</p>
+  @for (control of messageControls;track control.key) {
+    <app-input [question]="control"></app-input>
+  }
+  <div formGroupName="heading" class="shadow-2xl p-5 rounded-tr-md rounded-br-md my-2 border-l-2 border-red-500 ">
+    <p class="uppercase text-center pb-4">heading</p>
+    @for (control of nestedHeadingMessageControls;track control.key) {
+      <app-input [question]="control"></app-input>
+    }
+  </div>
+  <div formGroupName="report_name" class="shadow-2xl p-5 rounded-tr-md rounded-br-md my-2 border-l-2 border-red-500 ">
+    <p class="uppercase text-center pb-4">report_name</p>
+    @for (control of nestedReportNameMessageControls;track control.key) {
+      <app-input [question]="control"></app-input>
+    }
+  </div>
+</div>
