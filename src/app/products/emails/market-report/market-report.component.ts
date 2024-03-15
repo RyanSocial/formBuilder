@@ -1,11 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MarketReportService} from "./market-report.service";
-import {QuestionBase} from "../../../questions/questions.base";
-import {BehaviorSubject} from "rxjs";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
 import {AsyncPipe, JsonPipe} from "@angular/common";
-import {checkType} from "../../../../utils";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
 import {MrTestComponent} from "../mr-test/mr-test.component";
 
