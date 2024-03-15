@@ -1,20 +1,12 @@
 <div class="bg-white shadow-2xl rounded-lg p-5 w-full ">
-  <pre>{{ markReportForm.value | json }}</pre>
+
   <form (ngSubmit)="onSubmit()" [formGroup]="markReportForm">
-    <div>
-      <app-form-controller [questions]="questions$|async"></app-form-controller>
-    </div>
-    <div class="">
-      <div class="form-row">
-        <button class="bg-green-500 px-2 py-1 rounded-md text-white" type="submit">Save</button>
-      </div>
-      @if (payLoad) {
-        <div class="form-row">
-          <strong>Saved the following values</strong><br>{{ payLoad }}
-        </div>
-      }
-    </div>
+    <app-mr-test></app-mr-test>
+    <button (click)="onSubmit()">Save</button>
   </form>
 
 </div>
+@if(payLoad) {
+  <pre>{{ markReportForm.value | json }}</pre>
+}
 
