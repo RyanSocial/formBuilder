@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {QuestionBase} from "../../../questions/questions.base";
 import {TextboxQuestion} from "../../../questions/question-textbox";
 import {ToggleQuestion} from "../../../questions/question-toggle";
+import {FormGroupQuestion} from "../../../questions/question-formGroup";
 
 @Injectable()
 export class MarketReportService {
@@ -199,4 +200,6 @@ export class MarketReportService {
       }),
     ]
   }
+
+
 }

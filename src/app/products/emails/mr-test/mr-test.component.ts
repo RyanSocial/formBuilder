@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MarketReportService} from "../market-report/market-report.service";
 import {QuestionBase} from "../../../questions/questions.base";
-import {ControlContainer, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ControlContainer, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
 
 
@@ -32,8 +32,7 @@ export class MrTestComponent implements OnInit {
   nestedHeadingMessageControls: QuestionBase<string | number | boolean>[] = []
   nestedReportNameMessageControls: QuestionBase<string | number | boolean>[] = []
 
-
-  constructor(private marketReportService: MarketReportService) {
+  constructor(private marketReportService: MarketReportService, private fb: FormBuilder) {
     this.formControls = marketReportService.getFormControlQuestions()
     this.filterControls = marketReportService.getFilterQuestions()
     this.chartControls = marketReportService.getChartQuestions()
@@ -48,52 +47,38 @@ export class MrTestComponent implements OnInit {
     return this.parentContainer.control as FormGroup
   }
 
+  // USED FOR LISTS OF FORM CONTROL QUESTIONS
   setFormControls() {
     this.formControls.forEach(control => {
       this.parentFormGroup.addControl(control.key, new FormControl())
     })
   }
 
-  setFilterFormGroup() {
-    this.parentFormGroup.addControl("filter", new FormGroup({}))
-    this.filterControls.forEach(control => {
-      (this.parentFormGroup.get('filter') as FormGroup).addControl(control.key, new FormControl())
+  // ADD FORM GROUPS WITH SIMPLE CONTROLS
+  setFormGroup(groupName: string, questionArray: QuestionBase<string | number | boolean>[]): void {
+    this.parentFormGroup.addControl(groupName, new FormGroup({}))
+    questionArray.forEach(control => {
+      (this.parentFormGroup.get(groupName) as FormGroup).addControl(control.key, new FormControl())
     })
   }
 
-  setChartFormGroup() {
-    this.parentFormGroup.addControl("chart", new FormGroup({}))
-    this.chartControls.forEach(control => {
-      (this.parentFormGroup.get('chart') as FormGroup).addControl(control.key, new FormControl())
+  setNestedFormGroup(parentControl: string, nestedControl: string, questionArray: QuestionBase<string | number | boolean>[]): void {
+    (this.parentFormGroup.get(parentControl) as FormGroup).addControl(nestedControl, new FormGroup({}))
+    questionArray.forEach(control => {
+      (this.parentFormGroup.get(parentControl)?.get(nestedControl) as FormGroup).addControl(control.key, new FormControl())
     })
   }
 
-  setTemplateFormGroup() {
-    this.parentFormGroup.addControl("template", new FormGroup({}))
-    this.templateControls.forEach(control => {
-      (this.parentFormGroup.get('template') as FormGroup).addControl(control.key, new FormControl())
+  setExecutions() {
+    const group = this.fb.group({
+      type: [],
+      tasks: [[]]
     })
+    this.parentFormGroup.addControl("executions", new FormArray([group]))
   }
 
-  setMessageFormGroup() {
-    this.parentFormGroup.addControl("messages", new FormGroup({}))
-    this.messageControls.forEach(control => {
-      (this.parentFormGroup.get('messages') as FormGroup).addControl(control.key, new FormControl())
-    })
-  }
-
-  setNestedHeadingMessageFormGroup() {
-    (this.parentFormGroup.get('messages') as FormGroup).addControl("heading", new FormGroup({}))
-    this.nestedHeadingMessageControls.forEach(control => {
-      (this.parentFormGroup.get('messages')?.get('heading') as FormGroup).addControl(control.key, new FormControl())
-    })
-  }
-
-  setNestedReportName() {
-    (this.parentFormGroup.get('messages') as FormGroup).addControl("report_name", new FormGroup({}))
-    this.nestedReportNameMessageControls.forEach(control => {
-      (this.parentFormGroup.get('messages')?.get('report_name') as FormGroup).addControl(control.key, new FormControl())
-    })
+  setDataSet() {
+    this.parentFormGroup.addControl("data_sets", new FormArray([]))
   }
 
   ngOnInit() {
@@ -101,12 +86,26 @@ export class MrTestComponent implements OnInit {
   }
 
   setAllControls() {
+
+    // Set simple controls
+
     this.setFormControls()
-    this.setFilterFormGroup()
-    this.setChartFormGroup()
-    this.setTemplateFormGroup()
-    this.setMessageFormGroup()
-    this.setNestedHeadingMessageFormGroup()
-    this.setNestedReportName()
+
+    // Set the base form Groups
+
+    this.setFormGroup('filter', this.filterControls)
+    this.setFormGroup('chart', this.chartControls)
+    this.setFormGroup('template', this.templateControls)
+    this.setFormGroup('messages', this.messageControls)
+
+    // set the nested form groups
+
+    this.setNestedFormGroup('messages', 'heading', this.nestedHeadingMessageControls)
+    this.setNestedFormGroup('messages', 'report_name', this.nestedReportNameMessageControls)
+
+    //set Arrays
+
+    this.setExecutions()
+    this.setDataSet()
   }
 }
