@@ -133,7 +133,7 @@ export class MrTestComponent implements OnInit {
     this.setFormGroup('chart', this.chartControls)
     this.setFormGroup('template', this.templateControls)
     this.setFormGroup('messages', this.messageControls)
-    console.log(this.parentFormGroup.get('messages')?.value)
+
 
     // set the nested form groups
 
