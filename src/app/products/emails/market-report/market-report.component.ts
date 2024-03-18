@@ -4,7 +4,7 @@ import {MarketReportService} from "./market-report.service";
 import {QuestionControlService} from "../../../shared/services/question-control-service/question-control.service";
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
-import {MrTestComponent} from "../mr-test/mr-test.component";
+import {MarketReportWrapperComponent} from "./market-report-wrapper/market-report-wrapper.component";
 
 
 @Component({
@@ -16,7 +16,7 @@ import {MrTestComponent} from "../mr-test/mr-test.component";
     ReactiveFormsModule,
     JsonPipe,
     InputComponent,
-    MrTestComponent,
+    MarketReportWrapperComponent,
 
   ],
   providers: [MarketReportService, QuestionControlService],
