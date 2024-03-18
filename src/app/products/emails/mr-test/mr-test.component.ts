@@ -42,7 +42,6 @@ export class MrTestComponent implements OnInit {
   messageControls: QuestionBase<string | number | boolean>[] = []
   nestedHeadingMessageControls: QuestionBase<string | number | boolean>[] = []
   nestedReportNameMessageControls: QuestionBase<string | number | boolean>[] = []
-  testForm: FormGroup
 
   constructor(
     private marketReportService: MarketReportService,
@@ -55,13 +54,7 @@ export class MrTestComponent implements OnInit {
     this.messageControls = marketReportService.getMessageQuestions()
     this.nestedHeadingMessageControls = marketReportService.getMessageHeadingQuestions()
     this.nestedReportNameMessageControls = marketReportService.getMessageReportNAme()
-    this.testForm = new FormGroup({
-      skills: new FormArray([
-        new FormControl(),
-        new FormControl(),
-        new FormControl()
-      ])
-    })
+
   }
 
   ngOnInit() {
@@ -97,17 +90,21 @@ export class MrTestComponent implements OnInit {
 
 
   // ADD FORM GROUPS WITH SIMPLE CONTROLS
-  setFormGroup(groupName: string, questionArray: QuestionBase<string | number | boolean>[]): void {
+  setFormGroup<T>(groupName: string, questionArray: QuestionBase<T>[]): void {
     this.parentFormGroup.addControl(groupName, new FormGroup({}))
     questionArray.forEach(control => {
-      (this.parentFormGroup.get(groupName) as FormGroup).addControl(control.key, new FormControl())
+      const formControl = control.controlType === 'toggle'
+        ? new FormControl<boolean>(control.value as boolean) // Special case for toggles
+        : new FormControl(control.value ? control.value : '');  // Default for other types
+
+      (this.parentFormGroup.get(groupName) as FormGroup).addControl(control.key, formControl)
     })
   }
 
   setNestedFormGroup(parentControl: string, nestedControl: string, questionArray: QuestionBase<string | number | boolean>[]): void {
     (this.parentFormGroup.get(parentControl) as FormGroup).addControl(nestedControl, new FormGroup({}))
     questionArray.forEach(control => {
-      (this.parentFormGroup.get(parentControl)?.get(nestedControl) as FormGroup).addControl(control.key, new FormControl())
+      (this.parentFormGroup.get(parentControl)?.get(nestedControl) as FormGroup).addControl(control.key, new FormControl(control.value ? control.value : ''))
     })
   }
 
@@ -136,6 +133,7 @@ export class MrTestComponent implements OnInit {
     this.setFormGroup('chart', this.chartControls)
     this.setFormGroup('template', this.templateControls)
     this.setFormGroup('messages', this.messageControls)
+    console.log(this.parentFormGroup.get('messages')?.value)
 
     // set the nested form groups
 
@@ -148,9 +146,4 @@ export class MrTestComponent implements OnInit {
     this.setDataSet()
   }
 
-  logControl(parent: any) {
-    // console.log(parent.controls.get('tasks'))
-  }
-
-  protected readonly FormGroup = FormGroup;
 }
