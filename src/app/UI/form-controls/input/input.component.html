@@ -11,14 +11,22 @@
     </div>
     @switch (question.controlType) {
       @case ('textbox') {
-        <div class="md:w-2/3">
-          <input
-            [required]="question.required"
-            [formControlName]="question.key"
-            [placeholder]="question.placeholder"
-            class="bg-gray-200  appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-
-            [id]="question.key" [type]="question.controlType">
+        <div class="w-full">
+          <!--          Style the input box-->
+          <mat-form-field class="w-3/4">
+            <mat-label>{{ question.label }}</mat-label>
+            <input
+              [id]="question.key"
+              class="w-full"
+              matInput
+              [formControlName]="question.key"
+              [placeholder]="question.placeholder ? question.placeholder : ''">
+            <button *ngIf="control.value"
+                    matSuffix mat-icon-button aria-label="Clear"
+                    (click)="clearInput()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
 
         </div>
       }

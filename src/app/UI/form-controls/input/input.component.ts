@@ -1,9 +1,11 @@
-import {Component, inject, Input, input} from '@angular/core';
+import {Component, inject, Input, input, OnInit} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {QuestionBase} from "../../../questions/questions.base";
-import {NgClass} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-input',
@@ -12,7 +14,10 @@ import {NgClass} from "@angular/common";
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    MatIcon,
+    NgIf,
+    MatIconButton
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
@@ -24,5 +29,10 @@ import {NgClass} from "@angular/common";
   ]
 })
 export class InputComponent {
+  @Input() control! : FormControl
   @Input({required: true}) question!: QuestionBase<string | number | boolean>
+
+  clearInput() {
+    this.control.setValue('')
+  }
 }
