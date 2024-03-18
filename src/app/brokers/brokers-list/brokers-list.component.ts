@@ -5,6 +5,7 @@ import {ProductsComponent} from "../products/products/products.component";
 import {ViewportScroller} from "@angular/common";
 import {BrokersService} from "../../shared/api/brokers/brokers.service";
 import {SelectBrokerService} from "../../shared/services/select-broker/select-broker.service";
+import {MessageService} from "../../shared/services/message/message.service";
 
 
 @Component({
@@ -27,7 +28,16 @@ export class BrokersListComponent {
   activeToggle = signal<boolean>(true)
 
 
-  constructor(private brokersService: BrokersService, private scroller: ViewportScroller, private selectBrokerService: SelectBrokerService) {
+  constructor(
+    private brokersService: BrokersService,
+    private scroller: ViewportScroller,
+    private selectBrokerService: SelectBrokerService,
+    private messageService: MessageService
+  ) {
+  }
+
+  simulateMessage() {
+    this.messageService.updateMessage({text: 'Error', type: "FetchingData"})
   }
 
   logBroker(event: Event, broker: any) {
@@ -44,7 +54,7 @@ export class BrokersListComponent {
       )
       if (this.activeToggle()) {
         return brokers?.filter((broker) => {
-          return broker.active
+          return broker.active || null
         })
       } else {
         return brokers?.filter((broker) => {
@@ -70,7 +80,6 @@ export class BrokersListComponent {
   }
 
   protected readonly Math = Math;
-
 
 
   getUsersForPage(): Broker[] {
