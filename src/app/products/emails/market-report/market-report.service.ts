@@ -7,7 +7,7 @@ import {FormGroupQuestion} from "../../../questions/question-formGroup";
 @Injectable()
 export class MarketReportService {
   getFormControlQuestions() {
-    const rss_questions: QuestionBase<string | number | boolean>[] = [
+    const market_report_controls: QuestionBase<string | number | boolean>[] = [
       new TextboxQuestion({
         key: 'broker_id',
         required: true,
@@ -65,7 +65,7 @@ export class MarketReportService {
         value: false
       }),
     ]
-    return rss_questions
+    return market_report_controls
   }
 
   getFilterQuestions() {
@@ -200,6 +200,5 @@ export class MarketReportService {
       }),
     ]
   }
-
 
 }
