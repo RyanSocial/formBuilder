@@ -1,0 +1,76 @@
+<app-expansion-panel main_heading="General Config" description="basic info" >
+  @if (formControls.length > 0) {
+    <!--  General Controls-->
+
+    <div class="shadow-2xl p-5 rounded-md my-2">
+      <p class="uppercase text-center pb-4">General</p>
+      @for (control of formControls;track control.key) {
+        <app-input [question]="control" [control]="getControl(control.key)"></app-input>
+      }
+    </div>
+  }
+</app-expansion-panel>
+<div class="h-2"></div>
+
+<app-expansion-panel main_heading="filter" description="Filter info">
+  <div formGroupName="filter" class="shadow-2xl p-5 rounded-md my-2">
+    <p class="uppercase text-center pb-4">Filter</p>
+    @for (control of filterControls;track control.key) {
+      <app-input [question]="control" [control]="getNestedControl('filter', control.key)"></app-input>
+    }
+  </div>
+</app-expansion-panel>
+<div class="h-2"></div>
+
+<app-expansion-panel main_heading="Chart Controls" description="Chart Configuration">
+  <div formGroupName="chart" class="shadow-2xl p-5 rounded-md my-2">
+    <p class="uppercase text-center pb-4">Chart</p>
+    @for (control of chartControls;track control.key) {
+      <app-input [question]="control" [control]="getNestedControl('chart', control.key)"></app-input>
+    }
+  </div>
+</app-expansion-panel>
+<div class="h-2"></div>
+<app-expansion-panel main_heading="template" description="Template Config">
+<div formGroupName="template" class="shadow-2xl p-5 rounded-md my-2">
+  <p class="uppercase text-center pb-4">Template</p>
+  @for (control of templateControls;track control.key) {
+    <app-input [question]="control" [control]="getNestedControl('template', control.key)"></app-input>
+  }
+</div>
+</app-expansion-panel>
+
+
+<div class="h-2"></div>
+
+<app-expansion-panel main_heading="Message controls" description="description">
+<div formGroupName="messages" class="shadow-2xl p-5 rounded-md my-2" #messages>
+  <p class="uppercase text-center pb-4">Message</p>
+  @for (control of messageControls;track control.key) {
+    <app-input [question]="control" [control]="getNestedControl('messages', control.key)"></app-input>
+  }
+
+
+  <!--  Nested Heading-->
+<app-expansion-panel main_heading="heading" description="heading">
+  <div formGroupName="heading" class="bg-white shadow-2xl p-5 rounded-tr-md rounded-br-md my-2 border-l-2 ">
+    <p class="uppercase text-center pb-4">heading</p>
+    @for (control of nestedHeadingMessageControls;track control.key) {
+      <app-input [question]="control" [control]="getNestedControl('messages', control.key,'heading')"></app-input>
+    }
+  </div>
+</app-expansion-panel>
+  <div class="h-2"></div>
+  <!--  Nested Report Name-->
+<app-expansion-panel main_heading="reports" description="report configuartion">
+  <div formGroupName="report_name" class="shadow-2xl p-5 rounded-tr-md rounded-br-md my-2 border-l-2">
+    <p class="uppercase text-center pb-4">report_name</p>
+    @for (control of nestedReportNameMessageControls;track control.key) {
+      <app-input [question]="control" [control]="getNestedControl('messages', control.key,'report_name')"></app-input>
+    }
+  </div>
+</app-expansion-panel>
+</div>
+
+</app-expansion-panel>
+
