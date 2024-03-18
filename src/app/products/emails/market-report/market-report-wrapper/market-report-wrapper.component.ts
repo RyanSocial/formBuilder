@@ -1,9 +1,10 @@
-import {AbstractType, Component, ElementRef, inject, OnInit, viewChild, ViewChild} from '@angular/core';
-import {MarketReportService} from "../market-report/market-report.service";
-import {QuestionBase} from "../../../questions/questions.base";
+import {Component, inject, OnInit} from '@angular/core';
+import {MarketReportService} from "../market-report.service";
+import {QuestionBase} from "../../../../questions/questions.base";
 import {ControlContainer, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {InputComponent} from "../../../UI/form-controls/input/input.component";
+import {InputComponent} from "../../../../UI/form-controls/input/input.component";
 import {JsonPipe, NgForOf, ViewportScroller} from "@angular/common";
+import {ExpansionPanelComponent} from "../../../../UI/expansion-panel/expansion-panel.component";
 
 interface Execution {
   type: string;
@@ -15,16 +16,17 @@ interface Task extends FormControl {
 }
 
 @Component({
-  selector: 'app-mr-test',
+  selector: 'app-market-report-wrapper',
   standalone: true,
   imports: [
     InputComponent,
     ReactiveFormsModule,
     NgForOf,
-    JsonPipe
+    JsonPipe,
+    ExpansionPanelComponent
   ],
-  templateUrl: './mr-test.component.html',
-  styleUrl: './mr-test.component.css',
+  templateUrl: './maret-report-wrapper.component.html',
+  styleUrl: './market-report-wrapper.component.css',
   viewProviders: [
     {
       provide: ControlContainer,
@@ -33,7 +35,7 @@ interface Task extends FormControl {
   ]
 })
 
-export class MrTestComponent implements OnInit {
+export class MarketReportWrapperComponent implements OnInit {
   parentContainer = inject(ControlContainer)
   formControls: QuestionBase<string | number | boolean>[] = []
   filterControls: QuestionBase<any>[] = []
@@ -75,8 +77,11 @@ export class MrTestComponent implements OnInit {
     return this.controls[key]
   }
 
-  getNestedControl(groupName: string, controlName: string): FormControl {
-    return this.parentFormGroup.get(groupName)?.get(controlName) as FormControl
+  getNestedControl(groupName: string, controlName: string, nestedGroupName?: string): FormControl {
+    if (!nestedGroupName) {
+      return this.parentFormGroup.get(groupName)?.get(controlName) as FormControl
+    }
+    return this.parentFormGroup.get(groupName)?.get(nestedGroupName)?.get(controlName) as FormControl
   }
 
 
@@ -119,7 +124,6 @@ export class MrTestComponent implements OnInit {
   setDataSet() {
     this.parentFormGroup.addControl("data_sets", new FormArray([]))
   }
-
 
   setAllControls() {
 

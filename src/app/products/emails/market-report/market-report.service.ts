@@ -149,7 +149,7 @@ export class MarketReportService {
       new ToggleQuestion({
         key: 'randomized_analysis',
         required: true,
-        value: false
+        value: true,
       }),
       new ToggleQuestion({
         key: 'include_session',
