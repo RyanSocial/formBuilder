@@ -7,6 +7,8 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'ui-sans-serif', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
+        montserrat: ['Montserrat','Segoe UI', 'sans-serif'],
+
       },
       colors: {
         white: '#ffffff',
