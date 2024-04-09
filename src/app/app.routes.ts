@@ -4,6 +4,9 @@ import {PageNotFoundComponent} from "./UI/page-not-found/page-not-found.componen
 import {EmailsComponent} from "./products/emails/emails.component";
 import {MarketReportComponent} from "./products/emails/market-report/market-report.component";
 import {ProductsComponent} from "./brokers/products/products/products.component";
+import {
+  MarketReportStylingComponent
+} from "./styling/emails/market-report/market-report-styling/market-report-styling.component";
 
 export const routes: Routes = [
   {path: 'ac-broker-manager', component: BrokersListComponent},
@@ -14,7 +17,12 @@ export const routes: Routes = [
     children: [{
       path: 'market_report_email', // child route path
       component: MarketReportComponent, // child route component that the router renders
-    },]
+    },
+      {
+        path: 'market_report_styling',
+        component: MarketReportStylingComponent
+      }
+    ]
   },
   {
     path: 'products',
@@ -24,5 +32,6 @@ export const routes: Routes = [
       component: MarketReportComponent, // child route component that the router renders
     },]
   },
+
   {path: '**', component: PageNotFoundComponent},  // Wildcard route for a 404 page
 ];
