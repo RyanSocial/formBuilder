@@ -1,0 +1,28 @@
+<div class="flex justify-center py-7">
+  <!--  Button-->
+  <button class="px-1 py-3 rounded-full text-white w-80" [style.background-color]="ctaColor()">
+    Trade now
+  </button>
+
+  <!--  Pulse-->
+  <span class="relative flex h-3 w-3" (click)="toggleInput = !toggleInput">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+    <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+</span>
+
+  @if (toggleInput) {
+    <div class="absolute h-fit py-10 px-2 w-80 bg-white flex flex-col  shadow-2xl">
+
+      <p class="">Set Button Color</p>
+      <input type="text" class="border-gray-600 border-2 w-1/2" [(ngModel)]="colorInput">
+      <p class="text-red-500 text-sm"> {{ checkInput() }}</p>
+
+        <button type="button" [disabled]="checkInput() !== ''" class="text-left w-fit bg-[#39BA90] text-white px-4 py-2 rounded-md disabled:opacity-25" (click)="updateColor()">Change Color</button>
+
+
+    </div>
+
+
+  }
+
+</div>
