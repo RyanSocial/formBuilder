@@ -1,24 +1,15 @@
-<nav class="w-5/6 mx-auto p-5 bg-white shadow md:flex md:items-center md:justify-between mb-5 px-20 py-5">
-  <div class="flex justify-between items-center ">
-      <span class="text-2xl font-[Poppins] cursor-pointer">
-        <img class="h-10 inline"
-             src="./assets/autochartist-logo.png">
-      </span>
-
-    <span class="text-3xl cursor-pointer mx-2 md:hidden block">
-
-      </span>
+<nav class="full bg-white rounded-md max-w-[1440px] mx-auto px-5 pt-5 md:px-8 md:pt-8 lg:px-10 lg-pt-10  pb-0">
+  <div class="flex justify-between items-center">
+    <a routerLink="/ac-broker-manager">
+      <img class="h-10 inline"
+           src="./assets/autochartist-logo.png">
+    </a>
+    <div>
+      <p class="text-base text-ac-gray-400">Selected Broker</p>
+      <p
+        class="mx-auto px-2 max-w-fit border-transparent border-b-2 border-b-red-500 "> {{ selectedBroker() ? selectedBroker().name : 'Welcome to AutoChartist' }}</p>
+    </div>
   </div>
-  <div>
-    {{selectedBroker() ?  selectedBroker().name : 'Welcome to AutoChartist'}}
-  </div>
-  <ul
-    class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
-   @for(link of routes;track link.linkRef) {
-     <li class="mx-4 my-6 md:my-0">
-       <a routerLink="{{link.linkRef}}" class="text-xl hover:text-cyan-500 duration-500">{{ link.name }}</a>
-     </li>
-   }
-    <h2 class=""></h2>
-  </ul>
+
+
 </nav>
