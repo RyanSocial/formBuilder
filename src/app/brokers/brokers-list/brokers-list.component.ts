@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, Input, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, Input, input, signal} from '@angular/core';
 import {Broker} from "../../../models/broker.interface";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductsComponent} from "../products/products/products.component";
@@ -21,29 +21,39 @@ import {MessageService} from "../../shared/services/message/message.service";
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrokersListComponent {
-  brokers = this.brokersService.brokerSignal
+  // Services
+  brokerService = inject(BrokersService)
+  selectBrokerService = inject(SelectBrokerService)
+
+  brokers = signal<Broker[]>([])
   currentPage = signal<number>(1)
   pageSize = signal<number>(30)
   products = signal(false)
   activeToggle = signal<boolean>(true)
 
 
-  constructor(
-    private brokersService: BrokersService,
-    private scroller: ViewportScroller,
-    private selectBrokerService: SelectBrokerService,
-    private messageService: MessageService
-  ) {
+  constructor() {
+    this.getBrokers().then(() => {
+      console.log('Brokers Loaded')
+    })
   }
 
-  simulateMessage() {
-    this.messageService.updateMessage({text: 'Error', type: "FetchingData"})
-  }
 
   logBroker(event: Event, broker: any) {
     event.stopPropagation()
     this.selectBrokerService.setBroker(broker)
 
+  }
+
+  async getBrokers() {
+    try {
+      const brokers = await this.brokerService.getBrokers()
+      this.brokers.set(brokers)
+    } catch (err) {
+      console.log('There was an error', err)
+    } finally {
+      console.log('Finally')
+    }
   }
 
 
