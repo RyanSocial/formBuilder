@@ -11,8 +11,6 @@ module.exports = {
         inter: ['Inter','Segoe UI', 'sans-serif']
       },
       colors: {
-        white: '#ffffff',
-        black: '#000000',
         ac: {
           button: {
             // Light mode
@@ -68,5 +66,8 @@ module.exports = {
       },
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss/nesting'),
+    require('tailwindcss'),
+  ],
 }
