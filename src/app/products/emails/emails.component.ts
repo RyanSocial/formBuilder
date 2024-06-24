@@ -22,11 +22,7 @@ import {EmailComponent} from "./email/email/email.component";
 export class EmailsComponent {
   emails = signal<Product[] | undefined>(undefined)
   constructor(private selectBrokerService: SelectBrokerService) {
-    this.selectBrokerService.emailProducts$.subscribe({
-      next: (value) => {
-        this.emails.set(value)
-      }
-    })
+
   }
 
 }
