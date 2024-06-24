@@ -1,29 +1,48 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Broker} from "../../../../models/broker.interface";
-import {environment} from "../../../../environments/environement.prod";
-import {toSignal} from "@angular/core/rxjs-interop";
-
-
+import {inject, Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {firstValueFrom} from 'rxjs';
+import {Broker} from '../../../../models/broker.interface';
+import {environment} from '../../../../environments/environement.prod';
+import {isDevMode} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrokersService {
-  constructor(private httpClient: HttpClient) {
-  }
+  http = inject(HttpClient);
+  private url: string = environment.baseApiUrl;
 
-  private url: string = environment.baseApiUrl
   headers = new HttpHeaders({
     'X-Tenantid': 'acaweb_v'
   });
 
-  getBrokers(): Observable<Broker[]> {
-    return this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers:this.headers})
+  private cacheKey = 'cachedBrokers';
+
+  constructor(private httpClient: HttpClient) {
+    if (isDevMode()) {
+      console.log('Running in development mode');
+    } else {
+      console.log('Running in production mode');
+    }
   }
 
-  private getBrokersObs$ = this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers:this.headers})
+  async getBrokers(): Promise<Broker[]> {
+    // Check for cached data
+    const cachedData = localStorage.getItem(this.cacheKey);
+    if (isDevMode()) {
+      if (cachedData) {
+        return JSON.parse(cachedData) as Broker[];
+      }
+    }
 
-  brokerSignal = toSignal(this.getBrokersObs$)
+    // Fetch data from API
+    const brokers$ = this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers: this.headers});
+    const brokers = await firstValueFrom(brokers$);
+    if (isDevMode()) {
+      localStorage.setItem(this.cacheKey, JSON.stringify(brokers));
+    }
+    return brokers;
+  }
+
+
 }

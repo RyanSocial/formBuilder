@@ -15,10 +15,10 @@ import {RouterLink} from "@angular/router";
   styleUrl: './email.component.css'
 })
 export class EmailComponent implements OnInit {
-  @Input({required: true}) product_name!: string
+
   constructor(private marketReportsService: MarketReportsService) {
   }
   ngOnInit() {
-    console.log('products', this.product_name)
+
   }
 }
