@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, computed, inject, Input, input, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {Broker} from "../../../models/broker.interface";
-import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductsComponent} from "../products/products/products.component";
-import {ViewportScroller} from "@angular/common";
 import {BrokersService} from "../../shared/api/brokers/brokers.service";
 import {SelectBrokerService} from "../../shared/services/select-broker/select-broker.service";
-import {MessageService} from "../../shared/services/message/message.service";
 import {RouterLink} from "@angular/router";
+import {BrokerProductsService} from "../../shared/api/broker-products/broker-products.service";
+import {RssService} from "../../shared/api/rss/rss.service";
 
 
 @Component({
@@ -26,6 +26,9 @@ export class BrokersListComponent {
   // Services
   brokerService = inject(BrokersService)
   selectBrokerService = inject(SelectBrokerService)
+  productService = inject(BrokerProductsService)
+  rssService = inject(RssService)
+
 
   brokers = signal<Broker[]>([])
   currentPage = signal<number>(1)
@@ -33,11 +36,15 @@ export class BrokersListComponent {
   products = signal(false)
   activeToggle = signal<boolean>(true)
   query = signal<string>('');
+  // TODO search by broker_id
+  query_id = signal<number>(0);
+
 
   constructor() {
     this.getBrokers().then(() => {
       console.log('Brokers Loaded')
     })
+    this.setRss().then()
   }
 
 
@@ -52,9 +59,17 @@ export class BrokersListComponent {
       const brokers = await this.brokerService.getBrokers()
       this.brokers.set(brokers)
     } catch (err) {
-    //   TODO set global error message handling
+      //   TODO set global error message handling
     } finally {
+    }
+  }
 
+  async setRss() {
+    try {
+      const rss = await this.rssService.getAllRss()
+      this.rssService.set_all_rss(rss)
+    } catch (err) {
+      console.log('Error getting RSS Emails')
     }
   }
 
@@ -75,9 +90,29 @@ export class BrokersListComponent {
     }
   );
 
+  protected filteredUsersById = computed(() => {
+      const brokers = this.brokers()?.filter(({broker_id}) =>
+        broker_id === this.query_id()
+      )
+      if (this.activeToggle()) {
+        return brokers?.filter((broker) => {
+          return broker.active || null
+        })
+      } else {
+        return brokers?.filter((broker) => {
+          return !broker.active
+        })
+      }
+    }
+  );
+
 
   updateQuery(e: Event) {
     this.query.set((e.target as HTMLInputElement).value);
+  }
+
+  updateQueryId() {
+
   }
 
   logButtonClick(broker: Broker) {
