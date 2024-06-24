@@ -35,16 +35,14 @@ export class BrokersService {
       }
     }
 
-
     // Fetch data from API
     const brokers$ = this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers: this.headers});
     const brokers = await firstValueFrom(brokers$);
-
     if (isDevMode()) {
       localStorage.setItem(this.cacheKey, JSON.stringify(brokers));
     }
-
-
     return brokers;
   }
+
+
 }
