@@ -24,7 +24,6 @@ export class EmailsComponent {
   rss = inject(RssService)
 
   broker_id = signal<number>(0)
-
   broker_rss = signal<any[]>([])
 
 
