@@ -1,7 +1,5 @@
-import {Component, signal} from '@angular/core';
-import {MenuLinkInterface} from "../../../../models/menu-link.interface";
+import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {Broker} from "../../../../models/broker.interface";
 import {SelectBrokerService} from "../../../shared/services/select-broker/select-broker.service";
 
 
@@ -17,11 +15,5 @@ import {SelectBrokerService} from "../../../shared/services/select-broker/select
 export class NavBarComponent {
   constructor(private selectBrokerService: SelectBrokerService) {
   }
-
   selectedBroker = this.selectBrokerService.currentBroker
-
-  routes: MenuLinkInterface[] = [{
-    name: 'Brokers', linkRef: 'ac-broker-manager',
-  }
-    ]
 }

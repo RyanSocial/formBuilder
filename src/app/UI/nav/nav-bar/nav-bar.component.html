@@ -1,15 +1,11 @@
 <nav class="full bg-white rounded-md max-w-[1440px] mx-auto px-5 pt-5 md:px-8 md:pt-8 lg:px-10 lg-pt-10  pb-0">
   <div class="flex justify-between items-center">
     <a routerLink="/ac-broker-manager">
-      <img class="h-10 inline"
-           src="./assets/autochartist-logo.png">
+      <img class="h-10 inline" src="./assets/autochartist-logo.png">
     </a>
     <div>
-      <p class="text-base text-ac-gray-400">Selected Broker</p>
-      <p
-        class="mx-auto px-2 max-w-fit border-transparent border-b-2 border-b-red-500 "> {{ selectedBroker() ? selectedBroker().name : 'Welcome to AutoChartist' }}</p>
+      <p class="text-base text-right text-ac-gray-400 font-roboto font-light" >Selected Broker</p>
+      <p class=" font-roboto font-light mx-auto max-w-fit border-transparent border-b-2 {{selectedBroker() ? 'border-green-500' : 'border-red-400'}} "> {{ selectedBroker() ? selectedBroker()?.name : 'No broker Selected' }}</p>
     </div>
   </div>
-
-
 </nav>
