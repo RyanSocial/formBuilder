@@ -50,10 +50,7 @@ export class ProductsComponent implements OnInit {
   })
 
 
-  configureEmail() {
-    this.selectBrokerService.updateEmails(this.emailProducts())
-    this.router.navigateByUrl(`emails/${this.broker()?.broker_id}`)
-  }
+
 
   configureProducts() {
     this.router.navigate(['/products'], {state: {webProducts: this.WebProducts()}});
