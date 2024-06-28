@@ -6,7 +6,7 @@ import {BrokersService} from "../../shared/api/brokers/brokers.service";
 import {SelectBrokerService} from "../../shared/services/select-broker/select-broker.service";
 import {RouterLink} from "@angular/router";
 import {BrokerProductsService} from "../../shared/api/broker-products/broker-products.service";
-import {RssService} from "../../shared/api/rss/rss.service";
+
 
 
 @Component({
@@ -27,7 +27,7 @@ export class BrokersListComponent {
   brokerService = inject(BrokersService)
   selectBrokerService = inject(SelectBrokerService)
   productService = inject(BrokerProductsService)
-  rssService = inject(RssService)
+
 
 
   brokers = signal<Broker[]>([])
@@ -66,8 +66,8 @@ export class BrokersListComponent {
 
   async setRss() {
     try {
-      const rss = await this.rssService.getAllRss()
-      this.rssService.set_all_rss(rss)
+      // const rss = await this.rssService.getAllRss()
+      // this.rssService.set_all_rss(rss)
     } catch (err) {
       console.log('Error getting RSS Emails')
     }
