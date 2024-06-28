@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 #python virtual environment
-.python/.venv
+.python/.venv/
