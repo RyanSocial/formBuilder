@@ -2,7 +2,7 @@ import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
 import {FormatProductTitlePipe} from "../../pipes/product/format-product-title.pipe";
 import {JsonPipe} from "@angular/common";
-import {EmailComponent} from "./email/email/email.component";
+
 
 
 @Component({
@@ -13,7 +13,6 @@ import {EmailComponent} from "./email/email/email.component";
     RouterLink,
     FormatProductTitlePipe,
     JsonPipe,
-    EmailComponent
   ],
   templateUrl: './emails.component.html',
   styleUrl: './emails.component.css'

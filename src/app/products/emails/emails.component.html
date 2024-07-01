@@ -1,12 +1,21 @@
-<div class="w-full max-w-[1440px] bg-white  shadow-2xl p-5 md:p-8 lg:p-10 mx-auto font-roboto font-light relative">
-  <div class="col-span-3 p-2">
-    <div class="flex flex-col">
-      <div>
-        <p>Email Component</p>
-      </div>
+<div class="w-full max-w-[1440px] shadow-2xl p-5 md:p-8 lg:p-10 mx-auto font-roboto font-light relative">
+  <div class=" p-2 bg-red-400">
+    <div>
+      <p>Email Component</p>
+      <button [routerLink]="'./rss-emails'"
+              class="bg-ac-button-50 text-white hover:text-emerald-400 px-3 py-1 rounded-md"
+      >
+        Rss Emails
+      </button>
+      <button [routerLink]="'./market-reports'"
+              class="bg-ac-button-50 text-white hover:text-emerald-400 px-3 py-1 rounded-md"
+      >
+        Rss Emails
+      </button>
     </div>
-    <div class="col-span-9 bg-slate-600 p-2">
-      <router-outlet></router-outlet>
-    </div>
+
+  </div>
+  <div class="bg-slate-600 p-2">
+    <router-outlet></router-outlet>
   </div>
 </div>

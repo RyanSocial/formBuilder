@@ -1,6 +1,5 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {MarketReportComponent} from "./products/emails/market-report/market-report.component";
 import {InputComponent} from "./UI/form-controls/input/input.component";
 
 
@@ -13,7 +12,7 @@ import {GlobalErrorHandlingComponent} from "./UI/error-handling/global-error-han
   selector: 'app-root',
   standalone: true,
 
-  imports: [RouterOutlet, MarketReportComponent, InputComponent, BrokersListComponent, NavBarComponent, GlobalErrorHandlingComponent],
+  imports: [RouterOutlet, InputComponent, BrokersListComponent, NavBarComponent, GlobalErrorHandlingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
