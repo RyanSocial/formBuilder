@@ -11,7 +11,7 @@
               class="w-full"
               matInput
               [formControlName]="question.key"
-              [placeholder]="question.placeholder ? question.placeholder : ''">
+             >
             <button *ngIf="control && control.value"
                     matSuffix mat-icon-button aria-label="Clear"
                     (click)="clearInput()">
