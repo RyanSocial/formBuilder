@@ -7,10 +7,12 @@ import {ProductsComponent} from "./brokers/products/products/products.component"
 import {
   MarketReportStylingComponent
 } from "./styling/emails/market-report/market-report-styling/market-report-styling.component";
+import {RssTestComponent} from "./rss-test/rss-test.component";
 
 export const routes: Routes = [
   {path: 'ac-broker-manager', component: BrokersListComponent},
   {path: '', redirectTo: '/ac-broker-manager', pathMatch: 'full'},
+  {path: 'test-rss', component: RssTestComponent},
   {
     path: 'emails/:broker_id',
     component: EmailsComponent,
