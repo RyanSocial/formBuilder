@@ -1,0 +1,15 @@
+<div class="flex">
+  <div class="">
+    <ul>
+      @for (report of rssEmails(); track report.report_id) {
+        <li>
+          <p (click)="selectReport(report)">{{ report.report_id }}</p>
+        </li>
+        <div class="bg-red-500">
+          <button (click)="onEditRss(report)">Edit</button>
+        </div>
+      }
+    </ul>
+  </div>
+
+</div>
