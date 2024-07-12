@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
+import {ToggleSpinnerService} from "../../shared/services/spinner/toggle-spinner.service";
 
 @Component({
   selector: 'app-spinner',
@@ -8,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './spinner.component.css'
 })
 export class SpinnerComponent {
+  toggleSpinner = inject(ToggleSpinnerService)
+
+  get showToggle() {
+    return this.toggleSpinner.getToggleStatus()
+  }
 
 }
