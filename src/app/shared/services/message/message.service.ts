@@ -31,6 +31,10 @@ export class MessageService {
   updateMessage(message: Message) {
     this.currentSubject$.next(message)
   }
+  manualClose():void {
+    console.log('Manual Closed')
+    this.currentSubject$.next(null);
+  }
 
   private initAutoHiding(): void {
     this.currentSubject$.pipe(
