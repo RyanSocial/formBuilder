@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
-import {QuestionBase} from "../../../forms/question-base";
+
 import {GetRssService} from "./get-rss.service";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputComponent} from "../../../UI/form-controls/input/input.component";
@@ -11,6 +11,7 @@ import {RssReport, RssService} from "../../../shared/api/rss/rss.service";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {openRssDialog, ReportComponent} from "./report/report.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-rss',
@@ -27,7 +28,9 @@ import {MatDialog} from "@angular/material/dialog";
     JsonPipe,
     RouterOutlet,
     RouterLink,
-    ReportComponent
+    ReportComponent,
+    MatTabGroup,
+    MatTab
   ],
   templateUrl: './rss.component.html',
   styleUrl: './rss.component.css',
@@ -51,8 +54,7 @@ export class RssComponent implements OnInit {
   report_id = computed(() => {
     return this.selectedReport()?.report_id
   })
-  questions: QuestionBase<string>[] | null = []
-  description: QuestionBase<string>[] | null = []
+
   rssForm!: FormGroup
   payLoad: string = ''
   showEdit = signal<boolean>(false);
@@ -81,17 +83,7 @@ export class RssComponent implements OnInit {
     //   toppings: selectedToppings
     // });
 
-    this.rssService.getRssQuestions().subscribe({
-      next: (rss) => {
-        this.questions = rss
-      }
-    })
-    this.rssService.getDescription()
-      .subscribe({
-        next: (rss) => {
-          this.description = rss
-        }
-      })
+
   }
 
   async getAllRss(): Promise<RssReport[]> {

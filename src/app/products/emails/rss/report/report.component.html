@@ -1,4 +1,14 @@
 <div>
   <h1>This is a dialog</h1>
+  <div [formGroup]="form">
+    <label>report_id</label>
+    <input formControlName="report_id">
+    <div formGroupName="description">
+      <label >Key</label>
+      <input type="text" formControlName="key">
+    </div>
+    <label>Name</label>
+    <input type="text" formControlName="name">
+  </div>
   <button (click)="onClose()">Close</button>
 </div>

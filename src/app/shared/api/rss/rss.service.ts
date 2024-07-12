@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 
 export interface RssReport {
-  report_id: number;
+  report_id: string;
   name: string;
   display_name: {
     key: string;
