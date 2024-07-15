@@ -9,7 +9,6 @@ import {JsonPipe, NgForOf} from "@angular/common";
 import {FormDataService} from "../../../shared/services/form-data/form-data.service";
 import {RssReport, RssService} from "../../../shared/api/rss/rss.service";
 import {RouterLink, RouterOutlet} from "@angular/router";
-import {openRssDialog, ReportComponent} from "./report/report.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
@@ -28,7 +27,6 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
     JsonPipe,
     RouterOutlet,
     RouterLink,
-    ReportComponent,
     MatTabGroup,
     MatTab
   ],
@@ -129,15 +127,5 @@ export class RssComponent implements OnInit {
     console.log(this.selectedReport())
 
   }
-  async onEditRss(report:RssReport) {
-    const newRss = await openRssDialog(
-      this.dialog,
-      {
-        mode: 'update',
-        title: 'Edit Rss',
-        report
-      }
-    )
-    console.log('Rss edited', newRss)
-  }
+
 }
