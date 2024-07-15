@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, input, signal} from '@angular/core';
 import {ToggleSpinnerService} from "../../shared/services/spinner/toggle-spinner.service";
 
 @Component({
@@ -9,7 +9,8 @@ import {ToggleSpinnerService} from "../../shared/services/spinner/toggle-spinner
   styleUrl: './spinner.component.css'
 })
 export class SpinnerComponent {
-  toggleSpinner = inject(ToggleSpinnerService)
+  message = input.required<string | undefined>()
+  toggleSpinner: ToggleSpinnerService = inject(ToggleSpinnerService)
 
   get showToggle() {
     return this.toggleSpinner.getToggleStatus()
