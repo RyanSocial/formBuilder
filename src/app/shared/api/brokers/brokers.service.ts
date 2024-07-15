@@ -1,8 +1,8 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
 import {Broker} from '../../../../models/broker.interface';
-import {environment} from '../../../../environments/environement.prod';
+import {environment} from "../../../../environments/environment";
 import {isDevMode} from '@angular/core';
 
 @Injectable({
@@ -11,18 +11,16 @@ import {isDevMode} from '@angular/core';
 export class BrokersService {
   http = inject(HttpClient);
   private url: string = environment.baseApiUrl;
+  private developmentMode = signal<boolean>(false)
 
-  headers = new HttpHeaders({
-    'X-Tenantid': 'acaweb_v'
-  });
-
+  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*')
   private cacheKey = 'cachedBrokers';
 
   constructor(private httpClient: HttpClient) {
     if (isDevMode()) {
-      console.log('Running in development mode');
+      this.developmentMode.set(true)
     } else {
-      console.log('Running in production mode');
+      this.developmentMode.set(false)
     }
   }
 
@@ -36,7 +34,7 @@ export class BrokersService {
     }
 
     // Fetch data from API
-    const brokers$ = this.httpClient.get<Broker[]>(`${this.url}/api/fetchBrokers`, {headers: this.headers});
+    const brokers$ = this.httpClient.get<any>(`${this.url}/api/base/get/all?collection=brokers`);
     const brokers = await firstValueFrom(brokers$);
     if (isDevMode()) {
       localStorage.setItem(this.cacheKey, JSON.stringify(brokers));
@@ -44,5 +42,8 @@ export class BrokersService {
     return brokers;
   }
 
+  setMode(): boolean {
+    return this.developmentMode()
+  }
 
 }

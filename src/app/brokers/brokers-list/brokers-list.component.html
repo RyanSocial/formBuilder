@@ -1,10 +1,10 @@
 <div class="w-full max-w-[1440px] bg-white shadow-2xl p-5 md:p-8 lg:p-10 mx-auto font-roboto font-light relative">
-
   <!--  Table Info Header-->
   <div class="w-full pb-2">
     <div class="pb-2">
       <div class="text-2xl">Email Configuration</div>
-      <div>Configuration for new Email Serivce</div>
+      <div>Configuration for new Email Service</div>
+      <p>{{ devMode ? 'Running in Development' : 'Running in production' }}</p>
     </div>
   </div>
 
@@ -33,24 +33,33 @@
   </div>
 
   <!--  Data-->
-  <div class="">
-    @for (broker of getUsersForPage(); track broker.name) {
-      <div class="w-full block md:flex items-center odd:bg-gray-100 even:bg-white px-2 py-4"
-           (click)="logBroker($event,broker)">
-        <div class="flex-1"><p>{{ broker.name }}</p></div>
-        <div class="flex-1 font-bold">
-          <div
-            class="max-w-fit flex my-1">
-            <p class="min-w-12  {{broker.active ? 'text-green-500 0 ' : ' text-red-500'}}">{{ broker.broker_id }} </p>
+  @if (this.brokers().length > 0) {
+    <div class="">
+      @for (broker of getUsersForPage(); track broker.name) {
+        <div class="w-full block md:flex items-center odd:bg-gray-100 even:bg-white px-2 py-4"
+             (click)="logBroker($event,broker)">
+          <div class="flex-1"><p>{{ broker.name }}</p></div>
+          <div class="flex-1 font-bold">
+            <div
+              class="max-w-fit flex my-1">
+              <p class="min-w-12  {{broker.active ? 'text-green-500 0 ' : ' text-red-500'}}">{{ broker.broker_id }} </p>
+            </div>
+          </div>
+          <div class="flex-1">
+            <button [routerLink]="['/emails', broker.broker_id]"
+                    class="bg-ac-button-50 text-white hover:text-emerald-400 px-3 py-1 rounded-md"
+                    (click)="logButtonClick(broker)">
+              View Emails
+            </button>
           </div>
         </div>
-        <div class="flex-1">
-          <button [routerLink]="['/emails', broker.broker_id]"
-                  class="bg-ac-button-50 text-white hover:text-emerald-400 px-3 py-1 rounded-md"
-                  (click)="logButtonClick(broker)">
-            View Emails
-          </button>
-        </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  } @else {
+    <p>
+
+    </p>
+  }
+</div>
+<app-spinner [message]="'Loading brokers'"></app-spinner>
+

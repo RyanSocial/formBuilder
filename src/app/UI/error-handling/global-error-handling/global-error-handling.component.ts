@@ -20,4 +20,8 @@ export class GlobalErrorHandlingComponent {
       message && console.log(message);
     }));
   }
+
+  close() {
+    this.messageService.manualClose()
+  }
 }
